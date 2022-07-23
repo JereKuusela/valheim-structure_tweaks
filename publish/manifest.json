@@ -1,6 +1,6 @@
 {
   "name": "Structure_Tweaks",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/JereKuusela/valheim-structure_tweaks",
   "description": "Minor tweaks to the game logic that allow creating invulnerable structures.",
   "dependencies": [
