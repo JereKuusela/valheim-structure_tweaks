@@ -30,14 +30,28 @@ public class VersionCheck {
 
   // Tracks which clients have passed the version check (only for servers).
   private readonly List<ZRpc> ValidatedClients = new();
+
+  // Optional backing field to use ConfigSync values (will override other fields).
+  private ConfigSync? ConfigSync;
   public VersionCheck(string name) {
     Name = name;
     ModRequired = true;
     versionChecks.Add(this);
   }
+  public VersionCheck(ConfigSync configSync) {
+    ConfigSync = configSync;
+    Name = ConfigSync.Name;
+    versionChecks.Add(this);
+  }
   public void Initialize() {
     ReceivedCurrentVersion = null;
     ReceivedMinimumRequiredVersion = null;
+    if (ConfigSync == null) return;
+    Name = ConfigSync.Name;
+    DisplayName = ConfigSync.DisplayName!;
+    CurrentVersion = ConfigSync.CurrentVersion!;
+    MinimumRequiredVersion = ConfigSync.MinimumRequiredVersion!;
+    ModRequired = ConfigSync.ModRequired;
   }
   private bool IsVersionOk() {
     if (ReceivedMinimumRequiredVersion == null)
