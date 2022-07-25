@@ -1,5 +1,4 @@
 using HarmonyLib;
-using UnityEngine;
 
 namespace StructureTweaks;
 
@@ -14,7 +13,6 @@ public class AllScalable {
 public class AllScalable2 {
   static void Postfix(ZNetScene __instance) {
     if (!Configuration.configAllScalable.Value) return;
-    Debug.Log("ZNETSCENE");
     foreach (var prefab in __instance.m_namedPrefabs.Values) {
       if (prefab.GetComponent<ZNetView>() is { } view)
         view.m_syncInitialScale = true;

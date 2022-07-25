@@ -63,10 +63,25 @@ public class ConfigWrapper {
   }
   private static string State(bool value) => value ? "enabled" : "disabled";
   private static string Flag(bool value) => value ? "Removed" : "Added";
+  private static HashSet<string> Truthies = new() {
+    "1",
+    "true",
+    "yes",
+    "on"
+  };
+  private static bool IsTruthy(string value) => Truthies.Contains(value);
+  private static HashSet<string> Falsies = new() {
+    "0",
+    "false",
+    "no",
+    "off"
+  };
+  private static bool IsFalsy(string value) => Falsies.Contains(value);
+
   private static void Toggle(Terminal context, ConfigEntry<bool> setting, string name, string value) {
     if (value == "") setting.Value = !setting.Value;
-    else if (value == "1") setting.Value = true;
-    else if (value == "0") setting.Value = false;
+    else if (IsTruthy(value)) setting.Value = true;
+    else if (IsFalsy(value)) setting.Value = false;
     AddMessage(context, $"{name} {State(setting.Value)}.");
   }
   public static int TryParseInt(string value, int defaultValue) {

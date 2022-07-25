@@ -8,7 +8,7 @@ namespace StructureTweaks;
 public class StructureTweaks : BaseUnityPlugin {
   const string GUID = "structure_tweaks";
   const string NAME = "Structure Tweaks";
-  const string VERSION = "1.0.1";
+  const string VERSION = "1.0.2";
   public static ServerSync.ConfigSync ConfigSync = new(GUID)
   {
     DisplayName = NAME,
