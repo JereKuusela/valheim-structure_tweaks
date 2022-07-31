@@ -17,9 +17,11 @@ public class Helper {
     }
   }
   public static ZNetView GetHover() {
-    var hovered = Player.m_localPlayer?.m_hoveringPiece;
+    var hovered = Player.m_localPlayer?.m_hovering;
     if (!hovered || hovered == null) throw new InvalidOperationException("Not hovering anything.");
-    var view = hovered.m_nview;
+    var piece = hovered.GetComponent<Piece>();
+    if (!piece) throw new InvalidOperationException("Not hovering anything.");
+    var view = piece.m_nview;
     if (!view) throw new InvalidOperationException("Not hovering anything.");
     var id = Game.instance.GetPlayerProfile().GetPlayerID();
     if (!Console.instance.IsCheatsEnabled() && view.GetZDO().GetLong(Piece.m_creatorHash, 0L) != id)
