@@ -45,7 +45,7 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 	- Adds scaling to all objects.
 	- Adds collision override.
 	- Adds growth override.
-	- Adds interaction override..
+	- Adds interaction override.
 	- Adds render override.
 	- Adds wear override.
 
