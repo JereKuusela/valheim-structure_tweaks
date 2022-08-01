@@ -40,6 +40,9 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 
 # Changelog
 
+- v1.2
+	- Fixes plants not growing up.
+
 - v1.1
 	- Adds commands `growth` and `wear`.
 	- Adds scaling to all objects.

@@ -11,6 +11,7 @@ public class SUpdate {
   }
   static void Postfix(Plant __instance, float __state) {
     if (!Configuration.configGrowth.Value) return;
+    if (!__instance || !__instance.m_nview.IsValid()) return;
     if (__state == __instance.m_updateTime) return;
     var growth = __instance.m_nview.GetZDO().GetInt(GrowthCommand.Hash, -1);
     if (growth < 0) return;
