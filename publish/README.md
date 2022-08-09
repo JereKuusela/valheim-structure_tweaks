@@ -27,10 +27,10 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 
 # Config
 
-- All objects can be scaled : Scaling works for every object (requires restart).
+- All objects can be scaled : Scaling works for every object.
 - Ignore damage when infinite health: amage is fully ignored for objects with infinite health.
 - Protect pieces with infinite health: Pieces with infinite health can't be deconstructed (except by the creator).
-- No enemy targeting when no creator: Enemies won't target neutral structure (requires restart).
+- No enemy targeting when no creator: Enemies won't target neutral structure.
 - Override collision : Collision can be overridden (requires reloading the area).
 - Override falling : Object fall behavior can be overridden.
 - Override growth : Growth visual can be overridden.
@@ -45,6 +45,8 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 - v1.3
 	- Adds hammer protection to pieces with infinite health.
 	- Adds fall override.
+	- Fixes all scaling being (usually) always enabled.
+	- Fixes no targeting being (usually) always enabled.
 
 - v1.2
 	- Fixes plants not growing up.
