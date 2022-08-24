@@ -25,6 +25,7 @@ public class NoTargeting {
   }
   static void Postfix(ZNetScene __instance) {
     foreach (var kvp in __instance.m_namedPrefabs) {
+      if (Originals.ContainsKey(kvp.Key)) continue;
       if (kvp.Value.GetComponent<Piece>() is { } piece)
         Originals[kvp.Key] = piece.m_targetNonPlayerBuilt;
     }

@@ -36,16 +36,26 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 - Max support with infinite health: Pieces with infinite health have max structure support.
 - No enemy targeting when no creator: Enemies won't target neutral structure.
 - Override collision : Collision can be overridden (requires reloading the area).
+- Override effects : New area effects can be added.
 - Override falling : Object fall behavior can be overridden.
 - Override growth : Growth visual can be overridden.
 - Override interact : Interactability can be overridden.
+- Override pickables : Pickable drops, respawn and amount can be overridden.
 - Override portal restrictions : Teleporting with restricted items can be overridden.
 - Override rendering : Rendering can be overridden (requires reloading the area).
+- Override spawn points : Spawn point creature, respawn time and stars can be overridden.
 - Override wear : Wear visual can be overridden.
 - Command growth : Allow players to override growth for their own plants.
 - Command wear : Allow players to override wear for their own structures.
 
 # Changelog
+
+- v1.4
+	- Adds overriding for spawn points.
+	- Adds overriding for pickables.
+	- Adds adding of effect, event, status and weather areas.
+	- Fixes all scaling being (usually) always enabled (now for real).
+	- Fixes no targeting being (usually) always enabled (now for real).
 
 - v1.3
 	- Adds hammer protection to pieces with infinite health.

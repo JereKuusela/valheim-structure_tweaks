@@ -1,4 +1,6 @@
 using System;
+using System.Globalization;
+
 namespace Service;
 public class Helper {
   public static void AddMessage(Terminal context, string message, bool priority = true) {
@@ -43,4 +45,10 @@ public class Helper {
         Helper.AddError(args.Context, e.Message);
       }
     };
+
+  public static float Float(string arg, float defaultValue = 0f) {
+    if (!float.TryParse(arg, NumberStyles.Float, CultureInfo.InvariantCulture, out var result))
+      return defaultValue;
+    return result;
+  }
 }

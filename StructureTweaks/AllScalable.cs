@@ -23,8 +23,10 @@ public class AllScalable {
       Update(kvp.Key.GetPrefab(), kvp.Value, enable);
     }
   }
+  [HarmonyPriority(Priority.Last)]
   static void Postfix(ZNetScene __instance) {
     foreach (var kvp in __instance.m_namedPrefabs) {
+      if (Originals.ContainsKey(kvp.Key)) continue;
       if (kvp.Value.GetComponent<ZNetView>() is { } view)
         Originals[kvp.Key] = view.m_syncInitialScale;
     }
