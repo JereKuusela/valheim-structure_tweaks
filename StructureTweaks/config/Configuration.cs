@@ -5,6 +5,7 @@ public class Configuration {
 #nullable disable
   public static ConfigEntry<bool> configAllScalable;
   public static ConfigEntry<bool> configNoTargeting;
+  public static ConfigEntry<bool> configNoSpawnPointSuppression;
   public static ConfigEntry<bool> configGrowth;
   public static ConfigEntry<bool> configWear;
   public static ConfigEntry<bool> configCollision;
@@ -30,6 +31,8 @@ public class Configuration {
     configIgnoreSupport = wrapper.Bind(section, "Max support with infinite health", true, "Pieces with infinite health have max structure support.");
     configNoTargeting = wrapper.Bind(section, "No enemy targeting when no creator", true, "Enemies won't target neutral structure.");
     configNoTargeting.SettingChanged += (s, e) => NoTargeting.Update();
+    configNoSpawnPointSuppression = wrapper.Bind(section, "No spawn point suppression", true, "Spawn points can't be suppressed with player base (excludes normally respawning).");
+    configNoSpawnPointSuppression.SettingChanged += (s, e) => NoSuppression.Update();
     configCollision = wrapper.Bind(section, "Override collision", true, "Collision can be overridden (requires reloading the area).");
     configGrowth = wrapper.Bind(section, "Override growth", true, "Growth visual can be overridden.");
     configInteract = wrapper.Bind(section, "Override interact", true, "Interactability can be overridden.");

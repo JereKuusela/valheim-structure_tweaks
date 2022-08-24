@@ -15,12 +15,17 @@ public class AllScalable {
   }
   public static void Update(ZNetScene scene) {
     var enable = Configuration.configAllScalable.Value;
+    Dictionary<int, bool> Values = new();
     foreach (var kvp in scene.m_namedPrefabs) {
-      if (kvp.Value.GetComponent<ZNetView>() is { } view)
+      if (kvp.Value.GetComponent<ZNetView>() is { } view) {
         Update(kvp.Key, view, enable);
+        Values[kvp.Key] = view.m_syncInitialScale;
+      }
     }
     foreach (var kvp in scene.m_instances) {
-      Update(kvp.Key.GetPrefab(), kvp.Value, enable);
+      var prefab = kvp.Key.GetPrefab();
+      if (Values.ContainsKey(prefab) && kvp.Value.GetComponent<ZNetView>() is { } view)
+        view.m_syncInitialScale = Values[prefab];
     }
   }
   [HarmonyPriority(Priority.Last)]

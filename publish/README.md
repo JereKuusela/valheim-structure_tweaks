@@ -35,6 +35,7 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 - Protect pieces with infinite health: Pieces with infinite health can't be deconstructed (except by the creator).
 - Max support with infinite health: Pieces with infinite health have max structure support.
 - No enemy targeting when no creator: Enemies won't target neutral structure.
+- No spawn point suppression: Spawn points can't be suppressed with player base (excludes normally respawning).
 - Override collision : Collision can be overridden (requires reloading the area).
 - Override effects : New area effects can be added.
 - Override falling : Object fall behavior can be overridden.
@@ -54,6 +55,7 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 	- Adds overriding for spawn points.
 	- Adds overriding for pickables.
 	- Adds adding of effect, event, status and weather areas.
+	- Adds no spawn point suppression (excludes normally respawning).
 	- Fixes all scaling being (usually) always enabled (now for real).
 	- Fixes no targeting being (usually) always enabled (now for real).
 
