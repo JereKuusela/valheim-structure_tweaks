@@ -55,7 +55,7 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 	- Adds overriding for spawn points.
 	- Adds overriding for pickables.
 	- Adds adding of effect, event, status and weather areas.
-	- Adds no spawn point suppression (excludes normally respawning).
+	- Adds no spawn point suppression.
 	- Fixes all scaling being (usually) always enabled (now for real).
 	- Fixes no targeting being (usually) always enabled (now for real).
 

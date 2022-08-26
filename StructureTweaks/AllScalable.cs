@@ -7,18 +7,17 @@ namespace StructureTweaks;
 public class AllScalable {
   static Dictionary<int, bool> Originals = new();
   public static void Update() => Update(ZNetScene.instance);
-  public static void Update(int prefab, ZNetView obj, bool enable) {
-    if (enable)
+  public static void Update(int prefab, ZNetView obj) {
+    if (Configuration.configAllScalable.Value)
       obj.m_syncInitialScale = true;
     else if (Originals.TryGetValue(prefab, out var value))
       obj.m_syncInitialScale = value;
   }
   public static void Update(ZNetScene scene) {
-    var enable = Configuration.configAllScalable.Value;
     Dictionary<int, bool> Values = new();
     foreach (var kvp in scene.m_namedPrefabs) {
       if (kvp.Value.GetComponent<ZNetView>() is { } view) {
-        Update(kvp.Key, view, enable);
+        Update(kvp.Key, view);
         Values[kvp.Key] = view.m_syncInitialScale;
       }
     }

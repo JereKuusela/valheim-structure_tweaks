@@ -6,18 +6,20 @@ namespace StructureTweaks;
 public class NoSuppression {
   static Dictionary<int, bool> Originals = new();
   public static void Update() => Update(ZNetScene.instance);
-  public static void Update(int prefab, CreatureSpawner obj, bool enable) {
-    if (enable)
-      obj.m_spawnInPlayerBase = obj.m_spawnInPlayerBase || obj.m_respawnTimeMinuts <= 0f;
+  public static void Update(int prefab, CreatureSpawner obj) {
+    var singleTime = obj.m_respawnTimeMinuts <= 0f;
+    if (singleTime && Configuration.configNoSpawnPointSuppression.Value)
+      obj.m_spawnInPlayerBase = true;
+    else if (!singleTime && Configuration.configNoRespawnPointSuppression.Value)
+      obj.m_spawnInPlayerBase = true;
     else if (Originals.TryGetValue(prefab, out var value))
       obj.m_spawnInPlayerBase = value;
   }
   public static void Update(ZNetScene scene) {
-    var enable = Configuration.configNoSpawnPointSuppression.Value;
     Dictionary<int, bool> Values = new();
     foreach (var kvp in scene.m_namedPrefabs) {
       if (kvp.Value.GetComponent<CreatureSpawner>() is { } spawner) {
-        Update(kvp.Key, spawner, enable);
+        Update(kvp.Key, spawner);
         Values[kvp.Key] = spawner.m_spawnInPlayerBase;
       }
     }

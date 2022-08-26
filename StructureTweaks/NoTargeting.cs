@@ -6,18 +6,17 @@ namespace StructureTweaks;
 public class NoTargeting {
   static Dictionary<int, bool> Originals = new();
   public static void Update() => Update(ZNetScene.instance);
-  public static void Update(int prefab, Piece obj, bool enable) {
-    if (enable)
+  public static void Update(int prefab, Piece obj) {
+    if (Configuration.configNoTargeting.Value)
       obj.m_targetNonPlayerBuilt = true;
     else if (Originals.TryGetValue(prefab, out var value))
       obj.m_targetNonPlayerBuilt = value;
   }
   public static void Update(ZNetScene scene) {
-    var enable = Configuration.configNoTargeting.Value;
     Dictionary<int, bool> Values = new();
     foreach (var kvp in scene.m_namedPrefabs) {
       if (kvp.Value.GetComponent<Piece>() is { } piece) {
-        Update(kvp.Key, piece, enable);
+        Update(kvp.Key, piece);
         Values[kvp.Key] = piece.m_targetNonPlayerBuilt;
       }
     }
