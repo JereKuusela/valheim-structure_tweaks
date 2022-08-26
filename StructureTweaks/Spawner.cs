@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Reflection.Emit;
 using HarmonyLib;
 
 namespace StructureTweaks;
@@ -40,6 +42,21 @@ public class CreatureSpawnerAwake {
   }
 }
 
+
+[HarmonyPatch(typeof(CreatureSpawner), nameof(CreatureSpawner.Spawn))]
+public class CreatureSpawnerSpawn {
+  static int HashHealth = "override_health".GetStableHashCode();
+
+  static void Postfix(CreatureSpawner __instance, ZNetView __result) {
+    if (!Configuration.configSpawnPoint.Value) return;
+    if (!__instance.m_nview || !__instance.m_nview.IsValid()) return;
+    var value = __instance.m_nview.GetZDO().GetFloat(HashHealth, -1f);
+    if (value < 0f) return;
+    if (__result.GetComponent<Character>() is { } character)
+      character.SetMaxHealth(value);
+  }
+}
+
 [HarmonyPatch(typeof(Pickable), nameof(Pickable.Awake))]
 public class PickableAwake {
   static int HashSpawn = "override_spawn".GetStableHashCode();
@@ -68,5 +85,13 @@ public class PickableAwake {
     HandleRespawn(__instance);
     HandleSpawn(__instance);
     HandleAmount(__instance);
+  }
+}
+
+[HarmonyPatch(typeof(Character), nameof(Character.Awake))]
+public class DisableMaxHealthSetup {
+  static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) {
+    return new CodeMatcher(instructions).MatchForward(false, new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(Character), nameof(Character.SetupMaxHealth))))
+      .Set(OpCodes.Call, Transpilers.EmitDelegate(((Character _) => { })).operand).InstructionEnumeration();
   }
 }

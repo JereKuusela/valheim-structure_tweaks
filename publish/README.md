@@ -44,7 +44,7 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 - Override pickables : Pickable drops, respawn and amount can be overridden.
 - Override portal restrictions : Teleporting with restricted items can be overridden.
 - Override rendering : Rendering can be overridden (requires reloading the area).
-- Override spawn points : Spawn point creature, respawn time and stars can be overridden.
+- Override spawn points : Spawn point creature, respawn time, health and stars can be overridden.
 - Override wear : Wear visual can be overridden.
 - Command growth : Allow players to override growth for their own plants.
 - Command wear : Allow players to override wear for their own structures.
