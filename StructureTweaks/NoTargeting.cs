@@ -8,7 +8,7 @@ public class NoTargeting {
   public static void Update() => Update(ZNetScene.instance);
   public static void Update(int prefab, Piece obj) {
     if (Configuration.configNoTargeting.Value)
-      obj.m_targetNonPlayerBuilt = true;
+      obj.m_targetNonPlayerBuilt = false;
     else if (Originals.TryGetValue(prefab, out var value))
       obj.m_targetNonPlayerBuilt = value;
   }

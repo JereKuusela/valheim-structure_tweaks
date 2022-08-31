@@ -4,20 +4,27 @@ Changes the game logic to allow invisible, invulnerable, non-colliding, non-inte
 
 Install on all clients and on the server (modding [guide](https://youtu.be/L9ljm2eKLrk)).
 
-# Features
+# Config
 
-Each feature can be disabled from the config.
-
-- Objects with more than 1E19 health fully ignore any damage (status effects are not applied and damage numbers are not shown).
-- Objects with more than 1E19 health can't be deconstructed (execpt by the creator).
-- Objects with more than 1E19 health ignore the structure support system.
-- Pieces without creator won't be directly targeted by the enemies.
-- Objects can be modified to be invisible.
-- Objects can be modified to remove interaction.
-- Objects can be modified to have no collision.
-- Portals can be modified to allow all items.
-- Object visual wear can be overridden.
-- Plant visual growth can be overridden.
+- All objects can be scaled : Scaling works for every object.
+- Ignore damage when infinite health: Damage is fully ignored for objects with infinite health.
+- Protect pieces with infinite health: Pieces with infinite health can't be deconstructed (except by the creator).
+- Max support with infinite health: Pieces with infinite health have max structure support.
+- No enemy targeting when no creator: Enemies won't target neutral structures.
+- Override collision: Collision can be overridden (requires reloading the area).
+- Override effects: New area effects can be added.
+- Override falling: Object fall behavior can be overridden.
+- Override growth: Growth visual can be overridden.
+- Override interact: Interactability can be overridden.
+- Override pickables: Pickable drops, respawn and amount can be overridden.
+- Override portal restrictions: Teleporting with restricted items can be overridden.
+- Override rendering: Rendering can be overridden (requires reloading the area).
+- Override spawn points: Spawn point creature, respawn time, health and stars can be overridden.
+- Override wear: Wear visual can be overridden.
+- Command growth: Allow players to override growth for their own plants.
+- Command wear: Allow players to override wear for their own structures.
+- No spawn point suppression (one time): One time spawn points can't be suppressed with player base structures (even if configured to be respawning).
+- No spawn point suppression (respawning): Respawning spawn points can't be suppressed with player base structures (even if configured to be one time). This is off by default because it can affect vanilla game play.
 
 # Commands
 
@@ -27,27 +34,6 @@ Two commands that allow changing visual growth or wear of own plants and structu
 - `wear=[broken/damaged/healthy]`: Overrides the wear health.
 
 For other changes you need mods like [Infinity Hammer](https://valheim.thunderstore.io/package/JereKuusela/Infinity_Hammer/) or [World Edit Commands](https://valheim.thunderstore.io/package/JereKuusela/World_Edit_Commands/).
-
-# Config
-
-- All objects can be scaled : Scaling works for every object.
-- Ignore damage when infinite health: amage is fully ignored for objects with infinite health.
-- Protect pieces with infinite health: Pieces with infinite health can't be deconstructed (except by the creator).
-- Max support with infinite health: Pieces with infinite health have max structure support.
-- No enemy targeting when no creator: Enemies won't target neutral structure.
-- No spawn point suppression: Spawn points can't be suppressed with player base (excludes normally respawning).
-- Override collision : Collision can be overridden (requires reloading the area).
-- Override effects : New area effects can be added.
-- Override falling : Object fall behavior can be overridden.
-- Override growth : Growth visual can be overridden.
-- Override interact : Interactability can be overridden.
-- Override pickables : Pickable drops, respawn and amount can be overridden.
-- Override portal restrictions : Teleporting with restricted items can be overridden.
-- Override rendering : Rendering can be overridden (requires reloading the area).
-- Override spawn points : Spawn point creature, respawn time, health and stars can be overridden.
-- Override wear : Wear visual can be overridden.
-- Command growth : Allow players to override growth for their own plants.
-- Command wear : Allow players to override wear for their own structures.
 
 # Changelog
 
