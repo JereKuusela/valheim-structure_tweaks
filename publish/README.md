@@ -16,15 +16,11 @@ Install on all clients and on the server (modding [guide](https://youtu.be/L9ljm
 - Override falling: Object fall behavior can be overridden.
 - Override growth: Growth visual can be overridden.
 - Override interact: Interactability can be overridden.
-- Override pickables: Pickable drops, respawn and amount can be overridden.
 - Override portal restrictions: Teleporting with restricted items can be overridden.
 - Override rendering: Rendering can be overridden (requires reloading the area).
-- Override spawn points: Spawn point creature, respawn time, health and stars can be overridden.
 - Override wear: Wear visual can be overridden.
 - Command growth: Allow players to override growth for their own plants.
 - Command wear: Allow players to override wear for their own structures.
-- No spawn point suppression (one time): One time spawn points can't be suppressed with player base structures (even if configured to be respawning).
-- No spawn point suppression (respawning): Respawning spawn points can't be suppressed with player base structures (even if configured to be one time). This is off by default because it can affect vanilla game play.
 
 # Commands
 
@@ -36,6 +32,10 @@ Two commands that allow changing visual growth or wear of own plants and structu
 For other changes you need mods like [Infinity Hammer](https://valheim.thunderstore.io/package/JereKuusela/Infinity_Hammer/) or [World Edit Commands](https://valheim.thunderstore.io/package/JereKuusela/World_Edit_Commands/).
 
 # Changelog
+
+- v1.5
+	- Adds support for multiple effect areas.
+	- Removes pickables and spawn points (split off to Spawner Tweaks mod).
 
 - v1.4
 	- Adds overriding for spawn points.
