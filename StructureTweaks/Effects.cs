@@ -4,7 +4,7 @@ using HarmonyLib;
 using Service;
 using UnityEngine;
 
-namespace StructureTweaks;
+namespace Plugin;
 
 [HarmonyPatch(typeof(ZNetView), nameof(ZNetView.Awake))]
 public class ZNetViewAwake {
@@ -85,6 +85,7 @@ public class ZNetViewAwake {
     if (str == "") return;
     var values = str.Split(',');
     foreach (var value in values) {
+      if (value == "runestone") view.gameObject.AddComponent<RuneStone>();
     }
   }
   static void Postfix(ZNetView __instance) {

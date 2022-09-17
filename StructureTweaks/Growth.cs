@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using Service;
-namespace StructureTweaks;
+namespace Plugin;
 
 [HarmonyPatch(typeof(Plant), nameof(Plant.SUpdate))]
 public class SUpdate {

@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace StructureTweaks;
+namespace Plugin;
 
 [HarmonyPatch(typeof(StaticPhysics), nameof(StaticPhysics.Awake))]
 public class Fall {

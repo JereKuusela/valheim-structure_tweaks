@@ -2,10 +2,10 @@
 using HarmonyLib;
 using Service;
 
-namespace StructureTweaks;
+namespace Plugin;
 [HarmonyPatch]
 [BepInPlugin(GUID, NAME, VERSION)]
-public class StructureTweaks : BaseUnityPlugin {
+public class Plugin : BaseUnityPlugin {
   const string GUID = "structure_tweaks";
   const string NAME = "Structure Tweaks";
   const string VERSION = "1.5";

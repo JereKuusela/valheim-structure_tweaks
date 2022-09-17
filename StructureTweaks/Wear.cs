@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using Service;
 
-namespace StructureTweaks;
+namespace Plugin;
 
 
 [HarmonyPatch(typeof(WearNTear), nameof(WearNTear.SetHealthVisual))]

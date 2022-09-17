@@ -1,6 +1,6 @@
 using BepInEx.Configuration;
 using Service;
-namespace StructureTweaks;
+namespace Plugin;
 public class Configuration {
 #nullable disable
   public static ConfigEntry<bool> configAllScalable;
