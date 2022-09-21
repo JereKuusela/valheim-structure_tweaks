@@ -7,15 +7,15 @@ using UnityEngine;
 namespace Plugin;
 
 [HarmonyPatch]
-public class ForceInteract {
-  private static int Hash = "override_interact".GetStableHashCode();
+public class Unlock {
+  private static int Hash = "override_unlock".GetStableHashCode();
 
   private static bool CheckAccess(Component obj, float radius, bool flash, bool wardCheck) {
     var view = obj.GetComponentInParent<ZNetView>();
     var force = false;
     if (Configuration.configWardUnlock.Value) {
-      Helper.Int(view, Hash, value => {
-        if (value > 0) force = true;
+      Helper.Bool(view, Hash, value => {
+        if (value) force = true;
       });
     }
     return force || PrivateArea.CheckAccess(obj.transform.position, radius, flash, wardCheck);
@@ -48,7 +48,7 @@ public class ForceInteract {
     if (!canEdit) return result;
 
     var zdo = view.GetZDO();
-    var value = zdo.GetInt(Hash, 0) > 0;
+    var value = zdo.GetBool(Hash, false);
     if (value)
       return result + Localization.instance.Localize("\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] Remove unlock");
     else
@@ -71,7 +71,7 @@ public class ForceInteract {
     var canEdit = PrivateArea.CheckAccess(point, 0f, false, false);
     if (!canEdit) return true;
     if (!view.HasOwner()) view.ClaimOwnership();
-    view.InvokeRPC("ForceUnlock", view.GetZDO().GetInt(Hash) < 1);
+    view.InvokeRPC("ForceUnlock", !view.GetZDO().GetBool(Hash));
     __result = true;
     return false;
   }
@@ -86,7 +86,7 @@ public class ForceInteract {
     return OverrideInteract(__instance.m_nview, __instance.transform.position, alt, hold, ref __result);
   }
   static void ForceUnlock(ZNetView view, bool value) {
-    view.GetZDO().Set(Hash, value ? 1 : -1);
+    view.GetZDO().Set(Hash, value);
   }
   static void Register(ZNetView view) {
     view?.Register<bool>("ForceUnlock", (uid, value) => ForceUnlock(view, value));

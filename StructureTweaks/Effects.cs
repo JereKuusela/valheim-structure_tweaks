@@ -86,6 +86,9 @@ public class ZNetViewAwake {
     var values = str.Split(',');
     foreach (var value in values) {
       if (value == "runestone") view.gameObject.AddComponent<RuneStone>();
+      if (value == "chest") view.gameObject.AddComponent<Container>();
+      if (value == "door") view.gameObject.AddComponent<Door>();
+      if (value == "portal") view.gameObject.AddComponent<TeleportWorld>();
     }
   }
   static void Postfix(ZNetView __instance) {
