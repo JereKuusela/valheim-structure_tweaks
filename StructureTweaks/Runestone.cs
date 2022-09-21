@@ -121,7 +121,7 @@ public class RuneStoneText {
 [HarmonyPatch(typeof(Player), nameof(Player.AddKnownText))]
 public class AddKnownText {
   static bool Prefix(Player __instance, string label, string text) {
-    var labels = label.Split(',');
+    var labels = label.Split('|');
     if (labels.Length > 1) {
       foreach (var key in labels) __instance.AddKnownText(key, text);
       return false;
