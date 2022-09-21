@@ -1,4 +1,5 @@
 using HarmonyLib;
+using Service;
 
 namespace Plugin;
 
@@ -7,8 +8,9 @@ public class Teleportable {
   static int Hash = "override_restrict".GetStableHashCode();
   static void Prefix(TeleportWorld __instance) {
     if (!Configuration.configTeleportable.Value) return;
-    if (!__instance.m_nview || !__instance.m_nview.IsValid()) return;
-    ForceTeleportable.Force = !__instance.m_nview.GetZDO().GetBool(Hash, true);
+    Helper.Bool(__instance.m_nview, Hash, value => {
+      if (!value) ForceTeleportable.Force = true;
+    });
   }
   static void Postfix() {
     ForceTeleportable.Force = false;
@@ -18,8 +20,5 @@ public class Teleportable {
 [HarmonyPatch(typeof(Humanoid), nameof(Humanoid.IsTeleportable))]
 public class ForceTeleportable {
   public static bool Force = false;
-  static bool Prefix(ref bool __result) {
-    __result = Force;
-    return !Force;
-  }
+  static bool Postfix(bool result) => result || Force;
 }

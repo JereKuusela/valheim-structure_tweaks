@@ -10,7 +10,7 @@ public class NoCollision {
   static void Postfix(ZDO zdo, GameObject __result) {
     if (!__result || !Configuration.configCollision.Value) return;
     if (zdo == null) return;
-    if (zdo.GetBool(Hash, true)) return;
+    if (zdo.GetInt(Hash, -1) != 0) return;
     var colliders = __result.GetComponentsInChildren<Collider>();
     // For unknown reason, isTrigger doesn't turn off portal colliding.
     // Totally turning colliders off also allows creating one way portals.

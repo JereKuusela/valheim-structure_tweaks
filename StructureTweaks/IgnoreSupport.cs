@@ -21,8 +21,8 @@ public class IgnoreSupport {
         var isWet = EnvMan.instance.IsWet() && !__instance.HaveRoof();
         __instance.m_wet.SetActive(isWet);
       }
-      if (__instance.m_nview.GetZDO().m_floats.Remove(HashSupport))
-        __instance.m_nview.GetZDO().IncreseDataRevision();
+      if (__instance.m_nview.GetZDO().m_floats.ContainsKey(HashSupport))
+        __instance.m_nview.GetZDO().Set(HashSupport, __instance.GetMaxSupport());
     }
     return check;
   }

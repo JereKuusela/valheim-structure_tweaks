@@ -17,10 +17,16 @@ Install on all clients and on the server (modding [guide](https://youtu.be/L9ljm
 - Override growth: Growth visual can be overridden.
 - Override interact: Interactability can be overridden.
 - Override portal restrictions: Teleporting with restricted items can be overridden.
+- Override smoke restrictions: Fireplaces going out can be overridden.
 - Override rendering: Rendering can be overridden (requires reloading the area).
+- Override runestones: Runestone properties can be overridden.
+- Override unlock: Chests and doors can be force unlocked.
 - Override wear: Wear visual can be overridden.
-- Command growth: Allow players to override growth for their own plants.
-- Command wear: Allow players to override wear for their own structures.
+- Allow unlocking chests: Players can unlock chests to ignore wards.
+- Allow unlocking doors: Players can unlock doors to ignore wards.
+- Allow editing runestones: Runestone editing (Admin only, Owned, All).
+- Command growth: Growth editing (Admin only, Owned, All).
+- Command wear: Wear editing (Admin only, Owned, All).
 
 # Commands
 
@@ -35,6 +41,9 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 
 - v1.5
 	- Adds support for multiple effect areas.
+	- Adds support for runestones.
+	- Adds support for overriding fireplaces going out.
+	- Adds support for force unlocking chests and doors (overrides wards).
 	- Removes pickables and spawn points (split off to Spawner Tweaks mod).
 
 - v1.4

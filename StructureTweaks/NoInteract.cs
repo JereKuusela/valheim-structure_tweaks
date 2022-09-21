@@ -1,4 +1,5 @@
 using HarmonyLib;
+using Service;
 
 namespace Plugin;
 
@@ -10,9 +11,8 @@ public class NoHover {
     var go = __instance.m_hovering;
     if (!go) return;
     var view = go.transform.root.GetComponent<ZNetView>();
-    if (!view) return;
-    var zdo = view.GetZDO();
-    if (zdo == null || zdo.GetBool(Hash, true)) return;
-    __instance.m_hovering = null;
+    Helper.Bool(view, Hash, value => {
+      if (!value) __instance.m_hovering = null;
+    });
   }
 }
