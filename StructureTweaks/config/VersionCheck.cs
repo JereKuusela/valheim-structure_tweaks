@@ -38,7 +38,7 @@ public class VersionCheck {
     if (rpc != null)
       return $"Disconnect: The client ({rpc.m_socket.GetHostName()}) doesn't have the correct {DisplayName} version {ReceivedVersion}";
     if (ReceivedVersion == null)
-      return $"Mod {DisplayName} must be installed on the server (without Server only mode).";
+      return $"Mod {DisplayName} must be installed on the server.";
     return $"Mod {DisplayName} requires version {ReceivedVersion}. Installed is version {CurrentVersion}.";
   }
   private static void Logout() {

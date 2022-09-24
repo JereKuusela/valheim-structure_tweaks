@@ -42,7 +42,7 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 - v1.5
 	- Adds support for multiple effect areas.
 	- Adds support for runestones.
-	- Adds support for overriding fireplaces going out.
+	- Adds support for overriding fireplace smoke.
 	- Adds support for force unlocking chests and doors (overrides wards).
 	- Removes pickables and spawn points (split off to Spawner Tweaks mod).
 
@@ -72,8 +72,5 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 	- Adds interaction override.
 	- Adds render override.
 	- Adds wear override.
-
-- v1.0
-	- Initial release.
 
 Thanks for Azumatt for creating the mod icon!
