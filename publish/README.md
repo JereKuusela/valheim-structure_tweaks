@@ -39,6 +39,9 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 
 # Changelog
 
+- v1.6
+	- Fixes the version check failing.
+
 - v1.5
 	- Adds support for multiple effect areas.
 	- Adds support for runestones.
