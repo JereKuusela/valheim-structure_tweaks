@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using Service;
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(Plant))]
 public class Growth {

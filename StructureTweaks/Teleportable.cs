@@ -1,7 +1,7 @@
 using HarmonyLib;
 using Service;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(TeleportWorld), nameof(TeleportWorld.Teleport))]
 public class Teleportable {

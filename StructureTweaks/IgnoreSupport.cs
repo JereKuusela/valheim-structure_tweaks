@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(WearNTear), nameof(WearNTear.UpdateWear))]
 public class IgnoreSupport {

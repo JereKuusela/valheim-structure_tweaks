@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using HarmonyLib;
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.Awake))]
 public class NoTargeting {

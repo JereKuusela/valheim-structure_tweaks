@@ -4,7 +4,7 @@ using HarmonyLib;
 using Service;
 using UnityEngine;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(ZNetView), nameof(ZNetView.Awake))]
 public class ZNetViewAwake {

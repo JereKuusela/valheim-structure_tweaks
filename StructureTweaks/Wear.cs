@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using Service;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(WearNTear))]
 public class Wear {

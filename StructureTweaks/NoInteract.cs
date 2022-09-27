@@ -1,7 +1,7 @@
 using HarmonyLib;
 using Service;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(Player), nameof(Player.UpdateHover))]
 public class NoHover {

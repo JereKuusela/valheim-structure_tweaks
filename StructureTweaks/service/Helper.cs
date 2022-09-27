@@ -91,31 +91,31 @@ public class Helper {
   }
 
   public static void Float(ZNetView? view, int hash, Action<float> action) {
-    if (view == null) return;
+    if (view == null || !view.IsValid()) return;
     var value = view.GetZDO().GetFloat(hash, -1f);
     if (value < 0f) return;
     action(value);
   }
   public static void Int(ZNetView? view, int hash, Action<int> action) {
-    if (view == null) return;
+    if (view == null || !view.IsValid()) return;
     var value = view.GetZDO().GetInt(hash, -1);
     if (value < 0) return;
     action(value);
   }
   public static void Bool(ZNetView? view, int hash, Action<bool> action) {
-    if (view == null) return;
+    if (view == null || !view.IsValid()) return;
     var value = view.GetZDO().GetInt(hash, -1);
     if (value < 0) return;
     action(value > 0);
   }
   public static void String(ZNetView? view, int hash, Action<string> action) {
-    if (view == null) return;
+    if (view == null || !view.IsValid()) return;
     var value = view.GetZDO().GetString(hash, "");
     if (value == "") return;
     action(value);
   }
   public static void Prefab(ZNetView? view, int hash, Action<GameObject> action) {
-    if (view == null) return;
+    if (view == null || !view.IsValid()) return;
     var value = view.GetZDO().GetInt(hash, 0);
     var prefab = Helper.GetPrefab(hash);
     if (prefab == null) return;
@@ -123,8 +123,8 @@ public class Helper {
   }
 
   public static bool CanEdit(ZNetView? view, string mode) {
-    if (view == null) return false;
-    if (ZNet.instance.IsServer() || Plugin.Plugin.ConfigSync.IsAdmin || mode == "All") return true;
+    if (view == null || !view.IsValid()) return false;
+    if (ZNet.instance.IsServer() || StructureTweaksPlugin.Plugin.ConfigSync.IsAdmin || mode == "All") return true;
     var id = Game.instance.GetPlayerProfile().GetPlayerID();
     return view.GetZDO().GetLong(Piece.m_creatorHash, 0L) == id;
   }

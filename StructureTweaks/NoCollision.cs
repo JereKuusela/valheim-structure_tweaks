@@ -1,7 +1,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.CreateObject))]
 public class NoCollision {

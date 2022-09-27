@@ -3,7 +3,7 @@ using HarmonyLib;
 using Service;
 using UnityEngine;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 public class ZdoTextReceiver : MonoBehaviour, TextReceiver {
   private static int Name = "override_name".GetStableHashCode();

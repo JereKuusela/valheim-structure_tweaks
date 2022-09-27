@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(Player), nameof(Player.CheckCanRemovePiece))]
 public class NoRemove {

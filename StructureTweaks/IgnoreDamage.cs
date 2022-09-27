@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 
 [HarmonyPatch]
 public class IgnoreDamage {

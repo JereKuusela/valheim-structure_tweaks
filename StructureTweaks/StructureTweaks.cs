@@ -2,7 +2,7 @@
 using HarmonyLib;
 using Service;
 
-namespace Plugin;
+namespace StructureTweaksPlugin;
 [HarmonyPatch]
 [BepInPlugin(GUID, NAME, VERSION)]
 public class Plugin : BaseUnityPlugin {
