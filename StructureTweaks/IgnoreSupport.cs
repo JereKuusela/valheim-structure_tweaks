@@ -9,6 +9,7 @@ public class IgnoreSupport {
   private static int HashSupport = "support".GetStableHashCode();
   private static bool Check(ZNetView view, float defaultValue) => !Configuration.configIgnoreSupport.Value || view.GetZDO().GetFloat(HashHealth, defaultValue) < INFITE;
   static bool Prefix(WearNTear __instance) {
+    if (Configuration.configDisableStructureSystems.Value) return false;
     if (!__instance || !__instance.m_nview.IsValid()) return true;
     var check = Check(__instance.m_nview, __instance.m_health);
     if (!check) {

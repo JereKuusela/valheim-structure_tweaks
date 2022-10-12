@@ -5,6 +5,7 @@ public class Configuration {
 #nullable disable
   public static ConfigEntry<bool> configAllScalable;
   public static ConfigEntry<bool> configNoTargeting;
+  public static ConfigEntry<bool> configDisableStructureSystems;
   public static ConfigEntry<bool> configGrowth;
   public static ConfigEntry<bool> configWear;
   public static ConfigEntry<bool> configCollision;
@@ -32,6 +33,7 @@ public class Configuration {
     configIgnoreDamage = wrapper.Bind(section, "Ignore damage when infinite health", true, "Damage is fully ignored for objects with infinite health.");
     configIgnoreRemove = wrapper.Bind(section, "Protect pieces with infinite health", true, "Pieces with infinite health can't be deconstructed with the hammer.");
     configIgnoreSupport = wrapper.Bind(section, "Max support with infinite health", true, "Pieces with infinite health have max structure support.");
+    configDisableStructureSystems = wrapper.Bind(section, "Disable structure system", false, "Structure systems are disabled for all pieces.");
     configNoTargeting = wrapper.Bind(section, "No enemy targeting when no creator", true, "Enemies won't target neutral structure.");
     configNoTargeting.SettingChanged += (s, e) => NoTargeting.Update();
     configCollision = wrapper.Bind(section, "Override collision", true, "Collision can be overridden (requires reloading the area).");

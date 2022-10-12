@@ -39,6 +39,9 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 
 # Changelog
 
+- v1.7
+	- Adds a new setting to entirely disable structure systems.
+
 - v1.6
 	- Fixes the version check failing.
 
