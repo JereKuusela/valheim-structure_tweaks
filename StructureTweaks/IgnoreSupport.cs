@@ -12,10 +12,6 @@ public class IgnoreSupport {
     if (Configuration.configDisableStructureSystems.Value) return false;
     if (!__instance || !__instance.m_nview.IsValid()) return true;
     var check = Check(__instance.m_nview, __instance.m_health);
-    if (!check) {
-      __instance.m_support = INFITE;
-      __instance.UpdateVisual(false);
-    }
     if (!check && __instance.m_nview.IsOwner() && __instance.ShouldUpdate()) {
       // Copy pasted from the base game (not related to wear).
       if (__instance.m_wet) {
@@ -24,6 +20,10 @@ public class IgnoreSupport {
       }
       if (__instance.m_nview.GetZDO().m_floats.ContainsKey(HashSupport))
         __instance.m_nview.GetZDO().Set(HashSupport, __instance.GetMaxSupport());
+    }
+    if (!check) {
+      __instance.m_support = INFITE;
+      __instance.UpdateVisual(false);
     }
     return check;
   }
