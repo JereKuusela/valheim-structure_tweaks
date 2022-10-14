@@ -41,7 +41,6 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 
 - v1.7
 	- Adds a new setting to entirely disable structure systems.
-	- Fixes the stone portal.
 
 - v1.6
 	- Fixes the version check failing.
