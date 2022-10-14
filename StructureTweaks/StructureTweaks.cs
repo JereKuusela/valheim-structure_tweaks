@@ -9,7 +9,13 @@ public class Plugin : BaseUnityPlugin {
   const string GUID = "structure_tweaks";
   const string NAME = "Structure Tweaks";
   const string VERSION = "1.7";
-  public static ServerSync.ConfigSync ConfigSync = new(GUID, NAME, VERSION);
+  public static ServerSync.ConfigSync ConfigSync = new(GUID)
+  {
+    DisplayName = NAME,
+    CurrentVersion = VERSION,
+    IsLocked = true,
+    ModRequired = true
+  };
   public void Awake() {
     ConfigWrapper wrapper = new("structure_config", Config, ConfigSync);
     Configuration.Init(wrapper);
