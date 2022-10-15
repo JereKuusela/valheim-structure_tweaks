@@ -7,6 +7,7 @@ Install on all clients and on the server (modding [guide](https://youtu.be/L9ljm
 # Config
 
 - All objects can be scaled : Scaling works for every object.
+- Disable structure system: Structure systems are disabled for all pieces. Not enabled by default.
 - Ignore damage when infinite health: Damage is fully ignored for objects with infinite health.
 - Protect pieces with infinite health: Pieces with infinite health can't be deconstructed (except by the creator).
 - Max support with infinite health: Pieces with infinite health have max structure support.
@@ -38,6 +39,10 @@ Two commands that allow changing visual growth or wear of own plants and structu
 For other changes you need mods like [Infinity Hammer](https://valheim.thunderstore.io/package/JereKuusela/Infinity_Hammer/) or [World Edit Commands](https://valheim.thunderstore.io/package/JereKuusela/World_Edit_Commands/).
 
 # Changelog
+
+- v1.8
+	- `Ignore damage when infinite health` makes creatures permanently dodging to prevent farming experience.
+	- Fixes compatibility issue with Hidden Doors mod pieces.
 
 - v1.7
 	- Adds a new setting to entirely disable structure systems.

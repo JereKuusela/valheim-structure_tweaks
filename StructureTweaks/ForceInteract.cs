@@ -57,11 +57,13 @@ public class Unlock {
   [HarmonyPatch(typeof(Door), nameof(Door.GetHoverText)), HarmonyPostfix]
   static string DoorGetHoverText(string result, Door __instance) {
     if (!Configuration.configToggleDoorUnlock.Value || !__instance.CanInteract()) return result;
+    if (string.IsNullOrEmpty(result)) return result;
     return OverrideHoverText(result, __instance.m_nview, __instance.transform.position);
   }
   [HarmonyPatch(typeof(Container), nameof(Container.GetHoverText)), HarmonyPostfix]
   static string ContainerGetHoverText(string result, Container __instance) {
     if (!Configuration.configToggleContainerUnlock.Value || !__instance.m_checkGuardStone) return result;
+    if (string.IsNullOrEmpty(result)) return result;
     return OverrideHoverText(result, __instance.m_nview, __instance.transform.position);
   }
 
