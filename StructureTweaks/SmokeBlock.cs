@@ -9,7 +9,7 @@ public class SmokeBlock {
   static bool Postfix(bool result, SmokeSpawner __instance) {
     if (!Configuration.configSmokeBlock.Value) return result;
     var view = __instance.GetComponentInParent<ZNetView>();
-    Helper.Bool(view, Hash, value => {
+    Helper.Int(view, Hash, value => {
       result = false;
     });
     return result;

@@ -15,3 +15,7 @@ public class Fall {
     __instance.m_checkSolids = fall > 1;
   }
 }
+[HarmonyPatch(typeof(StaticPhysics), nameof(StaticPhysics.SUpdate))]
+public class GlobalFall {
+  static bool Prefix() => !Configuration.configDisableFalling.Value;
+}

@@ -13,6 +13,7 @@ public class ZNetViewAwake {
   static int HashEffect = "override_effect".GetStableHashCode();
   static int HashStatus = "override_status".GetStableHashCode();
   static int HashComponent = "override_component".GetStableHashCode();
+  static int HashWater = "override_water".GetStableHashCode();
   static void HandleWeather(ZNetView view) {
     var str = view.GetZDO().GetString(HashWeather, "");
     if (str == "") return;
@@ -91,6 +92,37 @@ public class ZNetViewAwake {
       if (value == "portal") view.gameObject.AddComponent<TeleportWorld>();
     }
   }
+  static int RoomCrypt = "sunkencrypt_WaterTunnel".GetStableHashCode();
+  static string WaterCrypt = "WaterCube_sunkencrypt";
+  static int RoomCave = "cave_new_deeproom_bottom_lake".GetStableHashCode();
+  static string WaterCave = "WaterCube_cave";
+  static void HandleWater(ZNetView view) {
+    Helper.String(view, HashWater, value => {
+      var split = value.Split(',');
+      var scale = Helper.TryScale(split, 1);
+      var roomHash = 0;
+      var water = "";
+      if (split[0] == "crypt") {
+        roomHash = RoomCrypt;
+        water = WaterCrypt;
+        scale.x *= 2;
+        scale.z *= 2;
+      }
+      if (split[0] == "cave") {
+        roomHash = RoomCave;
+        water = WaterCave;
+      }
+      if (DungeonDB.instance.m_roomByHash.TryGetValue(roomHash, out var room)) {
+        var tr = room.m_room.transform.Find(water);
+        if (tr) {
+          var obj = UnityEngine.Object.Instantiate(tr.gameObject, view.transform);
+          obj.transform.localPosition = Vector3.zero;
+          obj.transform.localRotation = Quaternion.identity;
+          obj.transform.localScale = scale;
+        }
+      }
+    });
+  }
   static void Postfix(ZNetView __instance) {
     if (!Configuration.configEffects.Value) return;
     if (!__instance || !__instance.IsValid()) return;
@@ -99,5 +131,6 @@ public class ZNetViewAwake {
     HandleEffect(__instance);
     HandleStatus(__instance);
     HandleComponent(__instance);
+    HandleWater(__instance);
   }
 }

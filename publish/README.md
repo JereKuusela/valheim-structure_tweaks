@@ -38,7 +38,19 @@ Two commands that allow changing visual growth or wear of own plants and structu
 
 For other changes you need mods like [Infinity Hammer](https://valheim.thunderstore.io/package/JereKuusela/Infinity_Hammer/) or [World Edit Commands](https://valheim.thunderstore.io/package/JereKuusela/World_Edit_Commands/).
 
+# Credits
+
+Thanks for Azumatt for creating the mod icon!
+
+Sources: [GitHub](https://github.com/JereKuusela/valheim-structure_tweaks)
+
+Donations: [Buy me a computer](https://www.buymeacoffee.com/jerekuusela)
+
 # Changelog
+
+- v1.9
+	- Adds support for adding a custom sized water surface.
+	- Fixes the black screen.
 
 - v1.8
 	- `Ignore damage when infinite health` makes creatures permanently dodging to prevent farming experience.
@@ -84,5 +96,3 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 	- Adds interaction override.
 	- Adds render override.
 	- Adds wear override.
-
-Thanks for Azumatt for creating the mod icon!

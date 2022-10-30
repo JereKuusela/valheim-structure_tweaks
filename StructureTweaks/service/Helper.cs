@@ -128,4 +128,24 @@ public class Helper {
     var id = Game.instance.GetPlayerProfile().GetPlayerID();
     return view.GetZDO().GetLong(Piece.m_creatorHash, 0L) == id;
   }
+
+  public static float TryFloat(string[] args, int index, float defaultValue = 1f) {
+    if (args.Length <= index) return defaultValue;
+    return Float(args[index], defaultValue);
+  }
+  public static Vector3 TryVectorXZY(string[] args, int index, Vector3 defaultValue) {
+    var vector = Vector3.zero;
+    vector.x = TryFloat(args, index, defaultValue.x);
+    vector.y = TryFloat(args, index + 2, defaultValue.y);
+    vector.z = TryFloat(args, index + 1, defaultValue.z);
+    return vector;
+  }
+  public static Vector3 TryScale(string[] args, int index) => SanityCheck(TryVectorXZY(args, index, Vector3.zero));
+  private static Vector3 SanityCheck(Vector3 scale) {
+    // Sanity check and also adds support for setting all values with a single number.
+    if (scale.x == 0) scale.x = 1;
+    if (scale.y == 0) scale.y = scale.x;
+    if (scale.z == 0) scale.z = scale.x;
+    return scale;
+  }
 }
