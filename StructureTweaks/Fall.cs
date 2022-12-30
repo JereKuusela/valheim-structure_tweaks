@@ -3,9 +3,11 @@ using HarmonyLib;
 namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(StaticPhysics), nameof(StaticPhysics.Awake))]
-public class Fall {
+public class Fall
+{
   static int Hash = "override_fall".GetStableHashCode();
-  static void Postfix(StaticPhysics __instance) {
+  static void Postfix(StaticPhysics __instance)
+  {
     if (!Configuration.configFalling.Value) return;
     if (!__instance.m_nview || !__instance.m_nview.IsValid()) return;
     var fall = __instance.m_nview.GetZDO().GetInt(Hash, -1);
@@ -16,6 +18,7 @@ public class Fall {
   }
 }
 [HarmonyPatch(typeof(StaticPhysics), nameof(StaticPhysics.SUpdate))]
-public class GlobalFall {
+public class GlobalFall
+{
   static bool Prefix() => !Configuration.configDisableFalling.Value;
 }

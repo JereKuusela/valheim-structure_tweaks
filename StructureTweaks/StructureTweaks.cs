@@ -5,7 +5,8 @@ using Service;
 namespace StructureTweaksPlugin;
 [HarmonyPatch]
 [BepInPlugin(GUID, NAME, VERSION)]
-public class Plugin : BaseUnityPlugin {
+public class Plugin : BaseUnityPlugin
+{
   const string GUID = "structure_tweaks";
   const string NAME = "Structure Tweaks";
   const string VERSION = "1.9";
@@ -16,7 +17,8 @@ public class Plugin : BaseUnityPlugin {
     IsLocked = true,
     ModRequired = true
   };
-  public void Awake() {
+  public void Awake()
+  {
     ConfigWrapper wrapper = new("structure_config", Config, ConfigSync);
     Configuration.Init(wrapper);
     new Harmony(GUID).PatchAll();
@@ -24,8 +26,10 @@ public class Plugin : BaseUnityPlugin {
 }
 
 [HarmonyPatch(typeof(Terminal), nameof(Terminal.InitTerminal))]
-public class SetCommands {
-  static void Postfix() {
+public class SetCommands
+{
+  static void Postfix()
+  {
     new GrowthCommand();
     new WearCommand();
   }

@@ -3,7 +3,8 @@ using HarmonyLib;
 namespace StructureTweaksPlugin;
 
 [HarmonyPatch]
-public class IgnoreDamage {
+public class IgnoreDamage
+{
   public const float INFITE = 1E19F;
   private static int HashHealth = "health".GetStableHashCode();
   private static bool Check(ZNetView view, float defaultValue) => !Configuration.configIgnoreDamage.Value || view.GetZDO().GetFloat(HashHealth, defaultValue) < INFITE;
