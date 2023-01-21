@@ -7,7 +7,7 @@ public class IgnoreDamage
 {
   public const float INFITE = 1E19F;
   private static int HashHealth = "health".GetStableHashCode();
-  private static bool Check(ZNetView view, float defaultValue) => !Configuration.configIgnoreDamage.Value || view.GetZDO().GetFloat(HashHealth, defaultValue) < INFITE;
+  private static bool Check(ZNetView view, float defaultValue) => !Configuration.configIgnoreDamage.Value || !view.IsValid() || view.GetZDO().GetFloat(HashHealth, defaultValue) < INFITE;
   [HarmonyPatch(typeof(Character), nameof(Character.IsDodgeInvincible)), HarmonyPostfix]
   static bool Character_IsDodgeInvincible(bool result, Character __instance) => Check(__instance.m_nview, 0f) ? result : true;
   [HarmonyPatch(typeof(TreeLog), nameof(TreeLog.RPC_Damage)), HarmonyPrefix]

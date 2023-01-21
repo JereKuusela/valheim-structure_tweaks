@@ -48,6 +48,9 @@ Donations: [Buy me a computer](https://www.buymeacoffee.com/jerekuusela)
 
 # Changelog
 
+- v1.10
+	- Fixes null error with some mods.
+
 - v1.9
 	- Adds support for adding a custom sized water surface.
 	- Fixes the black screen.
