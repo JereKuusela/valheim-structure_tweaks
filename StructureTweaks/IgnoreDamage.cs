@@ -37,7 +37,7 @@ public class IgnoreDamage
   static DestructibleType MineRock5_GetDestructibleType(DestructibleType type, MineRock5 __instance) => Check(__instance.m_nview, __instance.m_health) ? type : DestructibleType.None;
 
   [HarmonyPatch(typeof(TreeLog), nameof(TreeLog.GetDestructibleType)), HarmonyPostfix]
-  static DestructibleType TreeLog_GetDestructibleType(DestructibleType type, WearNTear __instance) => Check(__instance.m_nview, __instance.m_health) ? type : DestructibleType.None;
+  static DestructibleType TreeLog_GetDestructibleType(DestructibleType type, TreeLog __instance) => Check(__instance.m_nview, __instance.m_health) ? type : DestructibleType.None;
 
   [HarmonyPatch(typeof(WearNTear), nameof(WearNTear.GetDestructibleType)), HarmonyPostfix]
   static DestructibleType WearNTear_GetDestructibleType(DestructibleType type, WearNTear __instance) => Check(__instance.m_nview, __instance.m_health) ? type : DestructibleType.None;

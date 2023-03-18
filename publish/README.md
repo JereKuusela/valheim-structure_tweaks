@@ -48,6 +48,9 @@ Donations: [Buy me a computer](https://www.buymeacoffee.com/jerekuusela)
 
 # Changelog
 
+- v1.12
+  - Fixes error when trying to chop tree logs.
+
 - v1.11
   - Fixes experience gain from infinite health object.
   - Fixes error when using mods that add multiple chests per object.
