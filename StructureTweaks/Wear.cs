@@ -24,10 +24,9 @@ public class Wear
   }
   static void Register(ZNetView view)
   {
-    if (view)
-    {
-      view.Register<string>("SetWear", (uid, value) => SetWear(view, value));
-    }
+    if (!view) return;
+    view.Unregister("SetWear");
+    view.Register<string>("SetWear", (uid, value) => SetWear(view, value));
   }
   [HarmonyPatch(typeof(WearNTear), nameof(WearNTear.Awake)), HarmonyPostfix]
   static void RegisterRPC(WearNTear __instance)

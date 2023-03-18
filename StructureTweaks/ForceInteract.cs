@@ -104,7 +104,9 @@ public class Unlock
   }
   static void Register(ZNetView view)
   {
-    view?.Register<bool>("ForceUnlock", (uid, value) => ForceUnlock(view, value));
+    if (!view) return;
+    view.Unregister("ForceUnlock");
+    view.Register<bool>("ForceUnlock", (uid, value) => ForceUnlock(view, value));
   }
   [HarmonyPatch(typeof(Door), nameof(Door.Awake)), HarmonyPostfix]
   static void DoorAwake(Door __instance)

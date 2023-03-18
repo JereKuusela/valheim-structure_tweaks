@@ -48,54 +48,21 @@ Donations: [Buy me a computer](https://www.buymeacoffee.com/jerekuusela)
 
 # Changelog
 
+- v1.11
+  - Fixes experience gain from infinite health object.
+  - Fixes error when using mods that add multiple chests per object.
+
 - v1.10
-	- Fixes null error with some mods.
+  - Fixes null error with some mods.
 
 - v1.9
-	- Adds support for adding a custom sized water surface.
-	- Fixes the black screen.
+  - Adds support for adding a custom sized water surface.
+  - Fixes the black screen.
 
 - v1.8
-	- `Ignore damage when infinite health` makes creatures permanently dodging to prevent farming experience.
-	- Fixes compatibility issue with Hidden Doors mod pieces.
+  - `Ignore damage when infinite health` makes creatures permanently dodging to prevent farming experience.
+  - Fixes compatibility issue with Hidden Doors mod pieces.
 
 - v1.7
-	- Adds a new setting to entirely disable structure systems.
-	- Fixes compatibility issue with VALKEA mod pieces.
-
-- v1.6
-	- Fixes the version check failing.
-
-- v1.5
-	- Adds support for multiple effect areas.
-	- Adds support for runestones.
-	- Adds support for overriding fireplace smoke.
-	- Adds support for force unlocking chests and doors (overrides wards).
-	- Removes pickables and spawn points (split off to Spawner Tweaks mod).
-
-- v1.4
-	- Adds overriding for spawn points.
-	- Adds overriding for pickables.
-	- Adds adding of effect, event, status and weather areas.
-	- Adds no spawn point suppression.
-	- Fixes all scaling being (usually) always enabled (now for real).
-	- Fixes no targeting being (usually) always enabled (now for real).
-
-- v1.3
-	- Adds hammer protection to pieces with infinite health.
-	- Adds fall override.
-	- Adds portal item restrictions override.
-	- Fixes all scaling being (usually) always enabled.
-	- Fixes no targeting being (usually) always enabled.
-
-- v1.2
-	- Fixes plants not growing up.
-
-- v1.1
-	- Adds commands `growth` and `wear`.
-	- Adds scaling to all objects.
-	- Adds collision override.
-	- Adds growth override.
-	- Adds interaction override.
-	- Adds render override.
-	- Adds wear override.
+  - Adds a new setting to entirely disable structure systems.
+  - Fixes compatibility issue with VALKEA mod pieces.

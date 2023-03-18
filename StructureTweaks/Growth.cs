@@ -59,10 +59,9 @@ public class Growth
   }
   static void Register(ZNetView view)
   {
-    if (view)
-    {
-      view.Register<string>("SetGrowth", (uid, value) => SetGrowth(view, value));
-    }
+    if (!view) return;
+    view.Unregister("SetGrowth");
+    view.Register<string>("SetGrowth", (uid, value) => SetGrowth(view, value));
   }
   [HarmonyPatch(typeof(Plant), nameof(Plant.Awake)), HarmonyPostfix]
   static void RegisterRPC(Plant __instance)
