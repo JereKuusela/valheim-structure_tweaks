@@ -48,6 +48,9 @@ Donations: [Buy me a computer](https://www.buymeacoffee.com/jerekuusela)
 
 # Changelog
 
+- v1.13
+  - Fixes non-instant transition not working for weather effects.
+
 - v1.12
   - Fixes error when trying to chop tree logs.
 
@@ -61,11 +64,3 @@ Donations: [Buy me a computer](https://www.buymeacoffee.com/jerekuusela)
 - v1.9
   - Adds support for adding a custom sized water surface.
   - Fixes the black screen.
-
-- v1.8
-  - `Ignore damage when infinite health` makes creatures permanently dodging to prevent farming experience.
-  - Fixes compatibility issue with Hidden Doors mod pieces.
-
-- v1.7
-  - Adds a new setting to entirely disable structure systems.
-  - Fixes compatibility issue with VALKEA mod pieces.

@@ -26,7 +26,7 @@ public class ZNetViewAwake
     collider.isTrigger = true;
     collider.radius = Helper.Float(values[0]);
     var zone = obj.AddComponent<EnvZone>();
-    zone.m_force = str.Length > 2;
+    zone.m_force = values.Length > 2;
     zone.m_environment = values[1];
     obj.transform.parent = view.transform;
     obj.transform.localPosition = Vector3.zero;
@@ -63,7 +63,7 @@ public class ZNetViewAwake
     foreach (var value in values.Skip(1))
     {
       if (Enum.TryParse<EffectArea.Type>(value, true, out var type) && type != EffectArea.Type.None)
-        effect.m_type = (EffectArea.Type)((int)effect.m_type + (int)type);
+        effect.m_type |= type;
     }
     obj.transform.parent = view.transform;
     obj.transform.localPosition = Vector3.zero;
