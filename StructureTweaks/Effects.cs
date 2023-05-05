@@ -89,7 +89,9 @@ public class ZNetViewAwake
   }
   static void HandleComponent(ZNetView view)
   {
-    var str = view.GetZDO().GetString(HashComponent, "").ToLower(); ;
+    // Adding components to dungeons wouldn't really work.
+    if (!view.gameObject.GetComponent<DungeonGenerator>()) return;
+    var str = view.GetZDO().GetString(HashComponent, "").ToLower();
     if (str == "") return;
     var values = str.Split(',');
     foreach (var value in values)

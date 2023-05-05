@@ -4,6 +4,20 @@ Changes the game logic to allow invisible, invulnerable, non-colliding, non-inte
 
 Install on all clients and on the server (modding [guide](https://youtu.be/L9ljm2eKLrk)).
 
+# Usage
+
+Two commands that allow changing visual growth or wear of own plants and structures. This can be disabled from the config.
+
+- `growth=[big/big_bad/small/small_bad]`: Overrides the plant growth. Prevents growing up.
+- `wear=[broken/damaged/healthy]`: Overrides the wear health.
+
+For other changes you need mods like [Infinity Hammer](https://valheim.thunderstore.io/package/JereKuusela/Infinity_Hammer/) or [World Edit Commands](https://valheim.thunderstore.io/package/JereKuusela/World_Edit_Commands/).
+
+# Tutorials
+
+- World Edit basic usage: https://youtu.be/Bwkb3XadSl0 (28 minutes, created by StonedProphet)
+- World Edit Structure Tweaks: https://youtu.be/OaGO9Vis6uE (16 minutes, created by StonedProphet)
+
 # Config
 
 - All objects can be scaled : Scaling works for every object.
@@ -28,12 +42,3 @@ Install on all clients and on the server (modding [guide](https://youtu.be/L9ljm
 - Allow editing runestones: Runestone editing (Admin only, Owned, All).
 - Command growth: Growth editing (Admin only, Owned, All).
 - Command wear: Wear editing (Admin only, Owned, All).
-
-# Commands
-
-Two commands that allow changing visual growth or wear of own plants and structures. This can be disabled from the config.
-
-- `growth=[big/big_bad/small/small_bad]`: Overrides the plant growth. Prevents growing up.
-- `wear=[broken/damaged/healthy]`: Overrides the wear health.
-
-For other changes you need mods like [Infinity Hammer](https://valheim.thunderstore.io/package/JereKuusela/Infinity_Hammer/) or [World Edit Commands](https://valheim.thunderstore.io/package/JereKuusela/World_Edit_Commands/).

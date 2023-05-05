@@ -4,6 +4,20 @@ Changes the game logic to allow invisible, invulnerable, non-colliding, non-inte
 
 Install on all clients and on the server (modding [guide](https://youtu.be/L9ljm2eKLrk)).
 
+# Usage
+
+Two commands that allow changing visual growth or wear of own plants and structures. This can be disabled from the config.
+
+- `growth=[big/big_bad/small/small_bad]`: Overrides the plant growth. Prevents growing up.
+- `wear=[broken/damaged/healthy]`: Overrides the wear health.
+
+For other changes you need mods like [Infinity Hammer](https://valheim.thunderstore.io/package/JereKuusela/Infinity_Hammer/) or [World Edit Commands](https://valheim.thunderstore.io/package/JereKuusela/World_Edit_Commands/).
+
+# Tutorials
+
+- World Edit basic usage: https://youtu.be/Bwkb3XadSl0 (28 minutes, created by StonedProphet)
+- World Edit Structure Tweaks: https://youtu.be/OaGO9Vis6uE (16 minutes, created by StonedProphet)
+
 # Config
 
 - All objects can be scaled : Scaling works for every object.
@@ -29,15 +43,6 @@ Install on all clients and on the server (modding [guide](https://youtu.be/L9ljm
 - Command growth: Growth editing (Admin only, Owned, All).
 - Command wear: Wear editing (Admin only, Owned, All).
 
-# Commands
-
-Two commands that allow changing visual growth or wear of own plants and structures. This can be disabled from the config.
-
-- `growth=[big/big_bad/small/small_bad]`: Overrides the plant growth. Prevents growing up.
-- `wear=[broken/damaged/healthy]`: Overrides the wear health.
-
-For other changes you need mods like [Infinity Hammer](https://valheim.thunderstore.io/package/JereKuusela/Infinity_Hammer/) or [World Edit Commands](https://valheim.thunderstore.io/package/JereKuusela/World_Edit_Commands/).
-
 # Credits
 
 Thanks for Azumatt for creating the mod icon!
@@ -45,22 +50,3 @@ Thanks for Azumatt for creating the mod icon!
 Sources: [GitHub](https://github.com/JereKuusela/valheim-structure_tweaks)
 
 Donations: [Buy me a computer](https://www.buymeacoffee.com/jerekuusela)
-
-# Changelog
-
-- v1.13
-  - Fixes non-instant transition not working for weather effects.
-
-- v1.12
-  - Fixes error when trying to chop tree logs.
-
-- v1.11
-  - Fixes experience gain from infinite health object.
-  - Fixes error when using mods that add multiple chests per object.
-
-- v1.10
-  - Fixes null error with some mods.
-
-- v1.9
-  - Adds support for adding a custom sized water surface.
-  - Fixes the black screen.
