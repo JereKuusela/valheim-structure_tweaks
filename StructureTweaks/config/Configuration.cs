@@ -1,7 +1,8 @@
 using BepInEx.Configuration;
 using Service;
 namespace StructureTweaksPlugin;
-public class Configuration {
+public class Configuration
+{
 #nullable disable
   public static ConfigEntry<bool> configAllScalable;
   public static ConfigEntry<bool> configNoTargeting;
@@ -11,6 +12,7 @@ public class Configuration {
   public static ConfigEntry<bool> configWear;
   public static ConfigEntry<bool> configCollision;
   public static ConfigEntry<bool> configRuneStone;
+  public static ConfigEntry<bool> configMusic;
   public static ConfigEntry<string> configRuneStoneEditing;
   public static ConfigEntry<bool> configInteract;
   public static ConfigEntry<bool> configWardUnlock;
@@ -27,7 +29,8 @@ public class Configuration {
   public static ConfigEntry<bool> configIgnoreRemove;
   public static ConfigEntry<bool> configIgnoreSupport;
 #nullable enable
-  public static void Init(ConfigWrapper wrapper) {
+  public static void Init(ConfigWrapper wrapper)
+  {
     var section = "1. General";
     configAllScalable = wrapper.Bind(section, "All objects can be scaled", true, "Scaling works for every object.");
     configAllScalable.SettingChanged += (s, e) => AllScalable.Update();
@@ -41,6 +44,7 @@ public class Configuration {
     configCollision = wrapper.Bind(section, "Override collision", true, "Collision can be overridden (requires reloading the area).");
     configGrowth = wrapper.Bind(section, "Override growth", true, "Growth visual can be overridden.");
     configRuneStone = wrapper.Bind(section, "Override runestones", true, "Runestone properties can be overridden.");
+    configMusic = wrapper.Bind(section, "Override music", true, "Music properties can be overridden.");
     configInteract = wrapper.Bind(section, "Override interact", true, "Interactability can be overridden.");
     configRendering = wrapper.Bind(section, "Override rendering", true, "Rendering can be overridden (requires reloading the area).");
     configFalling = wrapper.Bind(section, "Override falling", true, "Falling can be overridden (requires reloading the area).");

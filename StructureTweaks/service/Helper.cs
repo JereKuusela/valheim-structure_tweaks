@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
@@ -175,4 +176,14 @@ public class Helper
     if (scale.z == 0) scale.z = scale.x;
     return scale;
   }
+
+  private static HashSet<string> Falsies = new() {
+    "0",
+    "false",
+    "no",
+    "off",
+    ""
+  };
+  public static bool IsFalsy(string value) => Falsies.Contains(value);
+
 }

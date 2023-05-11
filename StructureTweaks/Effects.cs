@@ -21,12 +21,22 @@ public class ZNetViewAwake
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
+    var size = Helper.Float(values[0]);
+    var force = values.Length > 2 && !Helper.IsFalsy(values[2]);
+    if (view.TryGetComponent<EnvZone>(out var zone))
+    {
+      if (size != 0f) zone.transform.localScale = Vector3.one * size;
+      zone.m_force = force;
+      zone.m_environment = values[1];
+      return;
+    }
+    if (size == 0f) return;
     GameObject obj = new();
     var collider = obj.AddComponent<SphereCollider>();
     collider.isTrigger = true;
-    collider.radius = Helper.Float(values[0]);
-    var zone = obj.AddComponent<EnvZone>();
-    zone.m_force = values.Length > 2;
+    collider.radius = size;
+    zone = obj.AddComponent<EnvZone>();
+    zone.m_force = force;
     zone.m_environment = values[1];
     obj.transform.parent = view.transform;
     obj.transform.localPosition = Vector3.zero;
@@ -38,14 +48,32 @@ public class ZNetViewAwake
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
+    var size = Helper.Float(values[0]);
+    if (view.TryGetComponent<EventZone>(out var zone))
+    {
+      if (size != 0f) zone.transform.localScale = Vector3.one * size;
+      zone.m_event = values[1];
+      return;
+    }
+    if (size == 0f) return;
     GameObject obj = new();
     var collider = obj.AddComponent<SphereCollider>();
     collider.isTrigger = true;
-    collider.radius = Helper.Float(values[0]);
+    collider.radius = size;
     obj.AddComponent<EventZone>().m_event = values[1];
     obj.transform.parent = view.transform;
     obj.transform.localPosition = Vector3.zero;
     obj.transform.localRotation = Quaternion.identity;
+  }
+  private static EffectArea.Type ParseType(string[] values)
+  {
+    var parsed = (EffectArea.Type)0;
+    foreach (var value in values)
+    {
+      if (Enum.TryParse<EffectArea.Type>(value, true, out var type) && type != EffectArea.Type.None)
+        parsed |= type;
+    }
+    return parsed;
   }
   static void HandleEffect(ZNetView view)
   {
@@ -53,18 +81,21 @@ public class ZNetViewAwake
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
+    var size = Helper.Float(values[0]);
+    if (view.TryGetComponent<EffectArea>(out var effect))
+    {
+      if (size != 0f) effect.transform.localScale = Vector3.one * size;
+      effect.m_type = ParseType(values.Skip(1).ToArray());
+      return;
+    }
+    if (size == 0f) return;
     GameObject obj = new();
     var collider = obj.AddComponent<SphereCollider>();
     collider.isTrigger = true;
-    collider.radius = Helper.Float(values[0]);
-    var effect = obj.AddComponent<EffectArea>();
+    collider.radius = size;
+    effect = obj.AddComponent<EffectArea>();
     effect.m_collider = collider;
-    effect.m_type = (EffectArea.Type)0;
-    foreach (var value in values.Skip(1))
-    {
-      if (Enum.TryParse<EffectArea.Type>(value, true, out var type) && type != EffectArea.Type.None)
-        effect.m_type |= type;
-    }
+    effect.m_type = ParseType(values.Skip(1).ToArray());
     obj.transform.parent = view.transform;
     obj.transform.localPosition = Vector3.zero;
     obj.transform.localRotation = Quaternion.identity;
@@ -75,13 +106,20 @@ public class ZNetViewAwake
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
+    var size = Helper.Float(values[0]);
+    if (view.TryGetComponent<EffectArea>(out var effect))
+    {
+      if (size != 0f) effect.transform.localScale = Vector3.one * size;
+      effect.m_statusEffect = values[1];
+      return;
+    }
+    if (size == 0f) return;
     GameObject obj = new();
     var collider = obj.AddComponent<SphereCollider>();
     collider.isTrigger = true;
-    collider.radius = Helper.Float(values[0]);
-    var effect = obj.AddComponent<EffectArea>();
+    collider.radius = size;
+    effect = obj.AddComponent<EffectArea>();
     effect.m_collider = collider;
-    effect.m_type = (EffectArea.Type)0;
     effect.m_statusEffect = values[1];
     obj.transform.parent = view.transform;
     obj.transform.localPosition = Vector3.zero;
@@ -90,7 +128,7 @@ public class ZNetViewAwake
   static void HandleComponent(ZNetView view)
   {
     // Adding components to dungeons wouldn't really work.
-    if (!view.gameObject.GetComponent<DungeonGenerator>()) return;
+    if (view.gameObject.GetComponent<DungeonGenerator>()) return;
     var str = view.GetZDO().GetString(HashComponent, "").ToLower();
     if (str == "") return;
     var values = str.Split(',');
@@ -100,6 +138,11 @@ public class ZNetViewAwake
       if (value == "chest" && !view.gameObject.GetComponent<Container>()) view.gameObject.AddComponent<Container>();
       if (value == "door" && !view.gameObject.GetComponent<Door>()) view.gameObject.AddComponent<Door>();
       if (value == "portal" && !view.gameObject.GetComponent<TeleportWorld>()) view.gameObject.AddComponent<TeleportWorld>();
+      /*if (value == "music" && !view.gameObject.GetComponent<MusicLocation>())
+      {
+        //var music = view.gameObject.AddComponent<MusicLocation>();
+        //music.m_music = Music.MusicType.None;
+      }*/
     }
   }
   static int RoomCrypt = "sunkencrypt_WaterTunnel".GetStableHashCode();

@@ -1,3 +1,8 @@
+- v1.15
+  - Adds support for changing the environment in dungeons.
+  - Adds support for changing the dungeon entrance texts.
+  - Fixes all custom objects not working.
+
 - v1.14
   - Adds support for vegvisirs in dungeons.
   
