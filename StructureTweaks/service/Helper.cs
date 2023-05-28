@@ -96,10 +96,12 @@ public class Helper
   public static Discovery ParseDiscovery(string data)
   {
     var split = data.Split(',');
-    Discovery discovery = new();
-    discovery.name = split[0];
-    discovery.pin = "";
-    discovery.type = Minimap.PinType.None;
+    Discovery discovery = new()
+    {
+      name = split[0],
+      pin = "",
+      type = Minimap.PinType.None
+    };
     if (split.Length > 1)
       discovery.pin = split[1];
     if (split.Length > 2 && Enum.TryParse<Minimap.PinType>(split[2], true, out var type))
@@ -140,8 +142,7 @@ public class Helper
   public static void Prefab(ZNetView? view, int hash, Action<GameObject> action)
   {
     if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetInt(hash, 0);
-    var prefab = Helper.GetPrefab(hash);
+    var prefab = GetPrefab(hash);
     if (prefab == null) return;
     action(prefab);
   }
@@ -177,7 +178,7 @@ public class Helper
     return scale;
   }
 
-  private static HashSet<string> Falsies = new() {
+  private static readonly HashSet<string> Falsies = new() {
     "0",
     "false",
     "no",
@@ -185,5 +186,11 @@ public class Helper
     ""
   };
   public static bool IsFalsy(string value) => Falsies.Contains(value);
+
+  public static T Get<T>(ZNetView view) where T : Component
+  {
+    if (view.TryGetComponent<T>(out var component)) return component;
+    return view.gameObject.AddComponent<T>();
+  }
 
 }

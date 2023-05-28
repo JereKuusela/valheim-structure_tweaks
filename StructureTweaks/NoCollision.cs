@@ -6,8 +6,8 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.CreateObject))]
 public class NoCollision
 {
-  public static int Hash = "override_collision".GetStableHashCode();
-  public static int PortalHash = "portal_wood".GetStableHashCode();
+  public static readonly int Hash = "override_collision".GetStableHashCode();
+  public static readonly int PortalHash = "portal_wood".GetStableHashCode();
   static void Postfix(ZDO zdo, GameObject __result)
   {
     if (!__result || !Configuration.configCollision.Value) return;

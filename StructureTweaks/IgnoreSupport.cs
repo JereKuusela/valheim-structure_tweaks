@@ -6,8 +6,8 @@ namespace StructureTweaksPlugin;
 public class IgnoreSupport
 {
   public const float INFITE = 1E19F;
-  private static int HashHealth = "health".GetStableHashCode();
-  private static int HashSupport = "support".GetStableHashCode();
+  private static readonly int HashHealth = "health".GetStableHashCode();
+  private static readonly int HashSupport = "support".GetStableHashCode();
   private static bool Check(ZNetView view, float defaultValue) => !Configuration.configIgnoreSupport.Value || view.GetZDO().GetFloat(HashHealth, defaultValue) < INFITE;
   static bool Prefix(WearNTear __instance)
   {

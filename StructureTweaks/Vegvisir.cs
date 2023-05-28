@@ -6,15 +6,15 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(Vegvisir))]
 public class VegvisirText
 {
-  private static int Name = "override_name".GetStableHashCode();
+  private static readonly int Name = "override_name".GetStableHashCode();
   // string
-  private static int Text = "override_text".GetStableHashCode();
+  private static readonly int Text = "override_text".GetStableHashCode();
   // string
-  private static int Topic = "override_topic".GetStableHashCode();
+  private static readonly int Topic = "override_topic".GetStableHashCode();
   // string
-  private static int Compendium = "override_compendium".GetStableHashCode();
+  private static readonly int Compendium = "override_compendium".GetStableHashCode();
   // string
-  private static int Discover = "override_discover".GetStableHashCode();
+  private static readonly int Discover = "override_discover".GetStableHashCode();
   // string
 
   private static void Setup(Vegvisir obj)

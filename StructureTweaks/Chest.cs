@@ -6,7 +6,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(Container), nameof(Container.Awake))]
 public class ChestAwake
 {
-  private static int Name = "override_name".GetStableHashCode();
+  private static readonly int Name = "override_name".GetStableHashCode();
   // string
 
   static void Postfix(Container __instance)

@@ -5,7 +5,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.Awake))]
 public class NoTargeting
 {
-  static Dictionary<int, bool> Originals = new();
+  static readonly Dictionary<int, bool> Originals = new();
   public static void Update() => Update(ZNetScene.instance);
   public static void Update(int prefab, Piece obj)
   {

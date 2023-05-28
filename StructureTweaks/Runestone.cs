@@ -7,17 +7,17 @@ namespace StructureTweaksPlugin;
 
 public class ZdoTextReceiver : MonoBehaviour, TextReceiver
 {
-  private static int Name = "override_name".GetStableHashCode();
+  private static readonly int Name = "override_name".GetStableHashCode();
   // string
-  private static int Text = "override_text".GetStableHashCode();
+  private static readonly int Text = "override_text".GetStableHashCode();
   // string
-  private static int Topic = "override_topic".GetStableHashCode();
+  private static readonly int Topic = "override_topic".GetStableHashCode();
   // string
-  private static int Compendium = "override_compendium".GetStableHashCode();
+  private static readonly int Compendium = "override_compendium".GetStableHashCode();
   // string
   private int Index = 0;
-  private int[] Hashes = new int[] { Name, Text, Topic, Compendium };
-  private string[] Topics = new string[] { "Enter name", "$piece_sign_input", "Enter topic", "Enter compendium topic" };
+  private readonly int[] Hashes = new int[] { Name, Text, Topic, Compendium };
+  private readonly string[] Topics = new string[] { "Enter name", "$piece_sign_input", "Enter topic", "Enter compendium topic" };
   // string
   private ZNetView? m_nview;
   private bool Queued = false;
@@ -62,15 +62,15 @@ public class ZdoTextReceiver : MonoBehaviour, TextReceiver
 [HarmonyPatch(typeof(RuneStone))]
 public class RuneStoneText
 {
-  private static int Name = "override_name".GetStableHashCode();
+  private static readonly int Name = "override_name".GetStableHashCode();
   // string
-  private static int Text = "override_text".GetStableHashCode();
+  private static readonly int Text = "override_text".GetStableHashCode();
   // string
-  private static int Topic = "override_topic".GetStableHashCode();
+  private static readonly int Topic = "override_topic".GetStableHashCode();
   // string
-  private static int Compendium = "override_compendium".GetStableHashCode();
+  private static readonly int Compendium = "override_compendium".GetStableHashCode();
   // string
-  private static int Discover = "override_discover".GetStableHashCode();
+  private static readonly int Discover = "override_discover".GetStableHashCode();
   // string
 
   [HarmonyPatch(typeof(RuneStone), nameof(RuneStone.GetHoverText)), HarmonyPrefix]
@@ -107,8 +107,7 @@ public class RuneStoneText
       receiver.Show();
       return false;
     }
-    if (__instance.m_randomTexts == null)
-      __instance.m_randomTexts = new();
+    __instance.m_randomTexts ??= new();
     Helper.String(view, Text, value =>
     {
       __instance.m_randomTexts = new();

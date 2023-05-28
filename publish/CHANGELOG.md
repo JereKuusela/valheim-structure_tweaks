@@ -1,3 +1,6 @@
+- v1.16
+  - Adds support for timed destroy.
+
 - v1.15
   - Adds support for changing the environment in dungeons.
   - Adds support for changing the dungeon entrance texts.

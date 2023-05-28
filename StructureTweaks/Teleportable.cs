@@ -6,7 +6,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(TeleportWorld), nameof(TeleportWorld.Teleport))]
 public class Teleportable
 {
-  static int Hash = "override_restrict".GetStableHashCode();
+  static readonly int Hash = "override_restrict".GetStableHashCode();
   static void Prefix(TeleportWorld __instance)
   {
     if (!Configuration.configTeleportable.Value) return;

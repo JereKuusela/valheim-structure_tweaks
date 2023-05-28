@@ -9,7 +9,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch]
 public class Unlock
 {
-  private static int Hash = "override_unlock".GetStableHashCode();
+  private static readonly int Hash = "override_unlock".GetStableHashCode();
 
   private static bool CheckAccess(Component obj, float radius, bool flash, bool wardCheck)
   {

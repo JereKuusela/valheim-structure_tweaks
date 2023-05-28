@@ -6,7 +6,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.CreateObject))]
 public class NoRender
 {
-  public static int Hash = "override_render".GetStableHashCode();
+  public static readonly int Hash = "override_render".GetStableHashCode();
   static void Postfix(ZDO zdo, GameObject __result)
   {
     if (!__result || !Configuration.configRendering.Value) return;

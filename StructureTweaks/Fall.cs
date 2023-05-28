@@ -5,7 +5,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(StaticPhysics), nameof(StaticPhysics.Awake))]
 public class Fall
 {
-  static int Hash = "override_fall".GetStableHashCode();
+  static readonly int Hash = "override_fall".GetStableHashCode();
   static void Postfix(StaticPhysics __instance)
   {
     if (!Configuration.configFalling.Value) return;

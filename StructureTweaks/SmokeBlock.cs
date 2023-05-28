@@ -6,7 +6,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(SmokeSpawner), nameof(SmokeSpawner.IsBlocked))]
 public class SmokeBlock
 {
-  static int Hash = "override_smoke".GetStableHashCode();
+  static readonly int Hash = "override_smoke".GetStableHashCode();
   static bool Postfix(bool result, SmokeSpawner __instance)
   {
     if (!Configuration.configSmokeBlock.Value) return result;
@@ -21,7 +21,7 @@ public class SmokeBlock
 [HarmonyPatch(typeof(SmokeSpawner), nameof(SmokeSpawner.Spawn))]
 public class SmokeSpawn
 {
-  static int Hash = "override_smoke".GetStableHashCode();
+  static readonly int Hash = "override_smoke".GetStableHashCode();
   static bool Prefix(SmokeSpawner __instance)
   {
     if (!Configuration.configSmokeBlock.Value) return true;

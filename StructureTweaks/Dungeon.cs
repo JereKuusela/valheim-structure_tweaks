@@ -8,11 +8,11 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(LocationProxy), nameof(LocationProxy.SpawnLocation))]
 public class LocationAwake
 {
-  static int HashWeather = "override_dungeon_weather".GetStableHashCode();
-  static int HashEnterText = "override_dungeon_enter_text".GetStableHashCode();
-  static int HashEnterHover = "override_dungeon_enter_hover".GetStableHashCode();
-  static int HashExitText = "override_dungeon_exit_text".GetStableHashCode();
-  static int HashExitHover = "override_dungeon_exit_hover".GetStableHashCode();
+  static readonly int HashWeather = "override_dungeon_weather".GetStableHashCode();
+  static readonly int HashEnterText = "override_dungeon_enter_text".GetStableHashCode();
+  static readonly int HashEnterHover = "override_dungeon_enter_hover".GetStableHashCode();
+  static readonly int HashExitText = "override_dungeon_exit_text".GetStableHashCode();
+  static readonly int HashExitHover = "override_dungeon_exit_hover".GetStableHashCode();
   static void Postfix(LocationProxy __instance)
   {
     if (!__instance.m_instance) return;

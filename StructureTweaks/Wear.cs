@@ -7,7 +7,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(WearNTear))]
 public class Wear
 {
-  public static int Hash = "override_wear".GetStableHashCode();
+  public static readonly int Hash = "override_wear".GetStableHashCode();
   public static int Number(string value)
   {
     if (value == "broken") return 0;

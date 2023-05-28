@@ -9,12 +9,12 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(ZNetView), nameof(ZNetView.Awake))]
 public class ZNetViewAwake
 {
-  static int HashWeather = "override_weather".GetStableHashCode();
-  static int HashEvent = "override_event".GetStableHashCode();
-  static int HashEffect = "override_effect".GetStableHashCode();
-  static int HashStatus = "override_status".GetStableHashCode();
-  static int HashComponent = "override_component".GetStableHashCode();
-  static int HashWater = "override_water".GetStableHashCode();
+  static readonly int HashWeather = "override_weather".GetStableHashCode();
+  static readonly int HashEvent = "override_event".GetStableHashCode();
+  static readonly int HashEffect = "override_effect".GetStableHashCode();
+  static readonly int HashStatus = "override_status".GetStableHashCode();
+  static readonly int HashComponent = "override_component".GetStableHashCode();
+  static readonly int HashWater = "override_water".GetStableHashCode();
   static void HandleWeather(ZNetView view)
   {
     var str = view.GetZDO().GetString(HashWeather, "");
@@ -137,6 +137,7 @@ public class ZNetViewAwake
       if (value == "runestone" && !view.gameObject.GetComponent<RuneStone>()) view.gameObject.AddComponent<RuneStone>();
       if (value == "chest" && !view.gameObject.GetComponent<Container>()) view.gameObject.AddComponent<Container>();
       if (value == "door" && !view.gameObject.GetComponent<Door>()) view.gameObject.AddComponent<Door>();
+      if (value == "destroy" && !view.gameObject.GetComponent<TimedDestruction>()) view.gameObject.AddComponent<TimedDestruction>();
       if (value == "portal" && !view.gameObject.GetComponent<TeleportWorld>()) view.gameObject.AddComponent<TeleportWorld>();
       /*if (value == "music" && !view.gameObject.GetComponent<MusicLocation>())
       {
@@ -145,10 +146,10 @@ public class ZNetViewAwake
       }*/
     }
   }
-  static int RoomCrypt = "sunkencrypt_WaterTunnel".GetStableHashCode();
-  static string WaterCrypt = "WaterCube_sunkencrypt";
-  static int RoomCave = "cave_new_deeproom_bottom_lake".GetStableHashCode();
-  static string WaterCave = "WaterCube_cave";
+  static readonly int RoomCrypt = "sunkencrypt_WaterTunnel".GetStableHashCode();
+  static readonly string WaterCrypt = "WaterCube_sunkencrypt";
+  static readonly int RoomCave = "cave_new_deeproom_bottom_lake".GetStableHashCode();
+  static readonly string WaterCave = "WaterCube_cave";
   static void HandleWater(ZNetView view)
   {
     Helper.String(view, HashWater, value =>
@@ -192,5 +193,6 @@ public class ZNetViewAwake
     HandleStatus(__instance);
     HandleComponent(__instance);
     HandleWater(__instance);
+    Destroy.Handle(__instance);
   }
 }

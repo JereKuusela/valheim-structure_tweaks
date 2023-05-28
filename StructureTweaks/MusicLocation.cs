@@ -11,11 +11,11 @@ public class MusicLocationAwake
 {
   private static Dictionary<string, AudioClip> Clips = new();
 
-  private static int Radius = "override_music_radius".GetStableHashCode();
+  private static readonly int Radius = "override_music_radius".GetStableHashCode();
   // float
-  private static int Condition = "override_music_condition".GetStableHashCode();
+  private static readonly int Condition = "override_music_condition".GetStableHashCode();
   // int (1 = one time, 2 = not if enemies, 3 = force fade)
-  private static int Audio = "override_music_audio".GetStableHashCode();
+  private static readonly int Audio = "override_music_audio".GetStableHashCode();
   // string
 
   static void Postfix(MusicLocation __instance)

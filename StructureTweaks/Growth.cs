@@ -7,8 +7,8 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(Plant))]
 public class Growth
 {
-  public static int Hash = "override_growth".GetStableHashCode();
-  public static int PlantHash = "plantTime".GetStableHashCode();
+  public static readonly int Hash = "override_growth".GetStableHashCode();
+  public static readonly int PlantHash = "plantTime".GetStableHashCode();
   public static int Number(string value)
   {
     if (value == "small") return 0;

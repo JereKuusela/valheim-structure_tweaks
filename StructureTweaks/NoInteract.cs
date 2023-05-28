@@ -6,7 +6,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(Player), nameof(Player.UpdateHover))]
 public class NoHover
 {
-  public static int Hash = "override_interact".GetStableHashCode();
+  public static readonly int Hash = "override_interact".GetStableHashCode();
   static void Postfix(Player __instance)
   {
     if (!Configuration.configInteract.Value) return;
