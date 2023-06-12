@@ -1,3 +1,6 @@
+- v1.17
+  - Updated for the new game version.
+
 - v1.16
   - Adds support for timed destroy.
 

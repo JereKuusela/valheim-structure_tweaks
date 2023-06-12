@@ -152,7 +152,7 @@ public class Helper
     if (view == null || !view.IsValid()) return false;
     if (ZNet.instance.IsServer() || StructureTweaksPlugin.Plugin.ConfigSync.IsAdmin || mode == "All") return true;
     var id = Game.instance.GetPlayerProfile().GetPlayerID();
-    return view.GetZDO().GetLong(Piece.m_creatorHash, 0L) == id;
+    return view.GetZDO().GetLong(ZDOVars.s_creator, 0L) == id;
   }
 
   public static float TryFloat(string[] args, int index, float defaultValue = 1f)

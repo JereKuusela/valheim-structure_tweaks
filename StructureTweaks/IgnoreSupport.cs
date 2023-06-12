@@ -22,8 +22,9 @@ public class IgnoreSupport
         var isWet = EnvMan.instance.IsWet() && !__instance.HaveRoof();
         __instance.m_wet.SetActive(isWet);
       }
-      if (__instance.m_nview.GetZDO().m_floats.ContainsKey(HashSupport))
-        __instance.m_nview.GetZDO().Set(HashSupport, __instance.GetMaxSupport());
+      var zdo = __instance.m_nview.GetZDO();
+      if (ZDOExtraData.s_floats.TryGetValue(zdo.m_uid, out var data) && data.ContainsKey(ZDOVars.s_support))
+        zdo.Set(ZDOVars.s_support, __instance.GetMaxSupport());
     }
     if (!check)
     {
