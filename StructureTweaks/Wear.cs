@@ -7,26 +7,25 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(WearNTear))]
 public class Wear
 {
-  public static readonly int Hash = "override_wear".GetStableHashCode();
   public static int Number(string value)
   {
-    if (value == "broken") return 0;
+    if (value == "broken") return 3;
     if (value == "damaged") return 1;
     if (value == "healthy") return 2;
-    return -1;
+    return 0;
   }
 
   public static void SetWear(ZNetView view, string value)
   {
     if (!view.IsOwner()) return;
     var number = Number(value);
-    view.GetZDO().Set(Hash, number);
+    view.GetZDO().Set(Hash.Wear, number);
   }
   static void Register(ZNetView view)
   {
     if (!view) return;
-    view.Unregister("SetWear");
-    view.Register<string>("SetWear", (uid, value) => SetWear(view, value));
+    view.Unregister("TC_SetWear");
+    view.Register<string>("TC_SetWear", (uid, value) => SetWear(view, value));
   }
   [HarmonyPatch(typeof(WearNTear), nameof(WearNTear.Awake)), HarmonyPostfix]
   static void RegisterRPC(WearNTear __instance)
@@ -36,7 +35,7 @@ public class Wear
 
   private static float Convert(int value, float defaultValue)
   {
-    if (value == 0) return 0.1f;
+    if (value == 3) return 0.1f;
     if (value == 1) return 0.5f;
     if (value == 2) return 1f;
     return defaultValue;
@@ -46,7 +45,7 @@ public class Wear
   {
     if (!Configuration.configWear.Value) return;
     if (!__instance.m_nview) return;
-    var value = __instance.m_nview.GetZDO().GetInt(Hash, -1);
+    var value = __instance.m_nview.GetZDO().GetInt(Hash.Wear);
     health = Convert(value, health);
   }
 }
@@ -60,7 +59,7 @@ public class WearCommand
     if (view.IsOwner())
       Wear.SetWear(view, value);
     else
-      view.InvokeRPC("SetWear", value);
+      view.InvokeRPC("TC_SetWear", value);
     var number = Wear.Number(value);
     if (number < 0)
       Helper.AddMessage(terminal, "Removed wear override.");

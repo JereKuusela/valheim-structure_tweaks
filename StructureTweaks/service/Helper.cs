@@ -114,28 +114,33 @@ public class Helper
   public static void Float(ZNetView? view, int hash, Action<float> action)
   {
     if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetFloat(hash, -1f);
-    if (value < 0f) return;
+    var value = view.GetZDO().GetFloat(hash);
+    if (value == 0f) return;
     action(value);
   }
   public static void Int(ZNetView? view, int hash, Action<int> action)
   {
     if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetInt(hash, -1);
-    if (value < 0) return;
+    var value = view.GetZDO().GetInt(hash);
+    if (value == 0) return;
     action(value);
   }
-  public static void Bool(ZNetView? view, int hash, Action<bool> action)
+  public static void Bool(ZNetView? view, int hash, Action action)
   {
     if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetInt(hash, -1);
-    if (value < 0) return;
-    action(value > 0);
+    var value = view.GetZDO().GetBool(hash);
+    if (!value) return;
+    action();
+  }
+  public static bool Bool(ZNetView? view, int hash)
+  {
+    if (view == null || !view.IsValid()) return false;
+    return view.GetZDO().GetBool(hash);
   }
   public static void String(ZNetView? view, int hash, Action<string> action)
   {
     if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetString(hash, "");
+    var value = view.GetZDO().GetString(hash);
     if (value == "") return;
     action(value);
   }
@@ -152,7 +157,7 @@ public class Helper
     if (view == null || !view.IsValid()) return false;
     if (ZNet.instance.IsServer() || StructureTweaksPlugin.Plugin.ConfigSync.IsAdmin || mode == "All") return true;
     var id = Game.instance.GetPlayerProfile().GetPlayerID();
-    return view.GetZDO().GetLong(ZDOVars.s_creator, 0L) == id;
+    return view.GetZDO().GetLong(ZDOVars.s_creator) == id;
   }
 
   public static float TryFloat(string[] args, int index, float defaultValue = 1f)

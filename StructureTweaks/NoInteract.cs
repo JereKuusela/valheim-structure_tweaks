@@ -6,16 +6,15 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(Player), nameof(Player.UpdateHover))]
 public class NoHover
 {
-  public static readonly int Hash = "override_interact".GetStableHashCode();
   static void Postfix(Player __instance)
   {
     if (!Configuration.configInteract.Value) return;
     var go = __instance.m_hovering;
     if (!go) return;
     var view = go.transform.root.GetComponent<ZNetView>();
-    Helper.Bool(view, Hash, value =>
+    Helper.Bool(view, Hash.NoInteract, () =>
     {
-      if (!value) __instance.m_hovering = null;
+      __instance.m_hovering = null;
     });
   }
 }

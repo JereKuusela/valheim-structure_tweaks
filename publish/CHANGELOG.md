@@ -1,3 +1,6 @@
+- v1.18
+  - Fixes some changes being lost when saving the game (unfortunately these can't be recovered and must be reapplied manually).
+
 - v1.17
   - Updated for the new game version.
 

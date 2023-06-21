@@ -6,23 +6,12 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(Vegvisir))]
 public class VegvisirText
 {
-  private static readonly int Name = "override_name".GetStableHashCode();
-  // string
-  private static readonly int Text = "override_text".GetStableHashCode();
-  // string
-  private static readonly int Topic = "override_topic".GetStableHashCode();
-  // string
-  private static readonly int Compendium = "override_compendium".GetStableHashCode();
-  // string
-  private static readonly int Discover = "override_discover".GetStableHashCode();
-  // string
-
   private static void Setup(Vegvisir obj)
   {
     if (!Configuration.configRuneStone.Value) return;
     var view = obj.GetComponentInParent<ZNetView>();
-    Helper.String(view, Name, value => obj.m_name = value);
-    Helper.String(view, Discover, value =>
+    Helper.String(view, Hash.Name, value => obj.m_name = value);
+    Helper.String(view, Hash.Discover, value =>
     {
       var discovery = Helper.ParseDiscovery(value);
       obj.m_locationName = discovery.name;

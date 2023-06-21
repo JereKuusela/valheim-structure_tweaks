@@ -1,20 +1,20 @@
 using HarmonyLib;
+using Service;
 
 namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(StaticPhysics), nameof(StaticPhysics.Awake))]
 public class Fall
 {
-  static readonly int Hash = "override_fall".GetStableHashCode();
   static void Postfix(StaticPhysics __instance)
   {
     if (!Configuration.configFalling.Value) return;
-    if (!__instance.m_nview || !__instance.m_nview.IsValid()) return;
-    var fall = __instance.m_nview.GetZDO().GetInt(Hash, -1);
-    if (fall < 0) return;
-    __instance.m_fall = fall > 0;
-    __instance.m_pushUp = fall > 0;
-    __instance.m_checkSolids = fall > 1;
+    Helper.Int(__instance.m_nview, Hash.Fall, value =>
+    {
+      __instance.m_fall = value == 1 || value == 2;
+      __instance.m_pushUp = value == 1 || value == 2;
+      __instance.m_checkSolids = value == 2;
+    });
   }
 }
 [HarmonyPatch(typeof(StaticPhysics), nameof(StaticPhysics.SUpdate))]

@@ -7,18 +7,10 @@ namespace StructureTweaksPlugin;
 
 public class ZdoTextReceiver : MonoBehaviour, TextReceiver
 {
-  private static readonly int Name = "override_name".GetStableHashCode();
-  // string
-  private static readonly int Text = "override_text".GetStableHashCode();
-  // string
-  private static readonly int Topic = "override_topic".GetStableHashCode();
-  // string
-  private static readonly int Compendium = "override_compendium".GetStableHashCode();
-  // string
   private int Index = 0;
-  private readonly int[] Hashes = new int[] { Name, Text, Topic, Compendium };
+  private readonly int[] Hashes = new int[] { Hash.Name, Hash.Text, Hash.Topic, Hash.Compendium };
   private readonly string[] Topics = new string[] { "Enter name", "$piece_sign_input", "Enter topic", "Enter compendium topic" };
-  // string
+
   private ZNetView? m_nview;
   private bool Queued = false;
   public void Awake()

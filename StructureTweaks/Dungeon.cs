@@ -8,23 +8,18 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(LocationProxy), nameof(LocationProxy.SpawnLocation))]
 public class LocationAwake
 {
-  static readonly int HashWeather = "override_dungeon_weather".GetStableHashCode();
-  static readonly int HashEnterText = "override_dungeon_enter_text".GetStableHashCode();
-  static readonly int HashEnterHover = "override_dungeon_enter_hover".GetStableHashCode();
-  static readonly int HashExitText = "override_dungeon_exit_text".GetStableHashCode();
-  static readonly int HashExitHover = "override_dungeon_exit_hover".GetStableHashCode();
   static void Postfix(LocationProxy __instance)
   {
     if (!__instance.m_instance) return;
 
-    Helper.String(__instance.m_nview, HashWeather, value =>
+    Helper.String(__instance.m_nview, Hash.DungeonWeather, value =>
     {
       var zone = __instance.m_instance.GetComponentInChildren<EnvZone>();
       if (zone)
         zone.m_environment = value;
     });
     Teleport[] portals = new Teleport[0];
-    Helper.String(__instance.m_nview, HashEnterText, value =>
+    Helper.String(__instance.m_nview, Hash.EnterText, value =>
     {
       if (portals.Length == 0)
         portals = __instance.m_instance.GetComponentsInChildren<Teleport>();
@@ -32,7 +27,7 @@ public class LocationAwake
       if (portal)
         portal.m_enterText = value;
     });
-    Helper.String(__instance.m_nview, HashEnterHover, value =>
+    Helper.String(__instance.m_nview, Hash.EnterHover, value =>
     {
       if (portals.Length == 0)
         portals = __instance.m_instance.GetComponentsInChildren<Teleport>();
@@ -40,7 +35,7 @@ public class LocationAwake
       if (portal)
         portal.m_hoverText = value;
     });
-    Helper.String(__instance.m_nview, HashExitText, value =>
+    Helper.String(__instance.m_nview, Hash.ExitText, value =>
     {
       if (portals.Length == 0)
         portals = __instance.m_instance.GetComponentsInChildren<Teleport>();
@@ -48,7 +43,7 @@ public class LocationAwake
       if (portal)
         portal.m_enterText = value;
     });
-    Helper.String(__instance.m_nview, HashExitHover, value =>
+    Helper.String(__instance.m_nview, Hash.ExitHover, value =>
     {
       if (portals.Length == 0)
         portals = __instance.m_instance.GetComponentsInChildren<Teleport>();
@@ -57,5 +52,4 @@ public class LocationAwake
         portal.m_hoverText = value;
     });
   }
-
 }

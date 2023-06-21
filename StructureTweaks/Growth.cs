@@ -7,15 +7,13 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(Plant))]
 public class Growth
 {
-  public static readonly int Hash = "override_growth".GetStableHashCode();
-  public static readonly int PlantHash = "plantTime".GetStableHashCode();
   public static int Number(string value)
   {
-    if (value == "small") return 0;
+    if (value == "small") return 4;
     if (value == "small_bad") return 1;
     if (value == "big") return 2;
     if (value == "big_bad") return 3;
-    return -1;
+    return 0;
   }
   [HarmonyPatch(typeof(Plant), nameof(Plant.SUpdate)), HarmonyPrefix]
   static void StoreTime(Plant __instance, ref float __state)
@@ -28,9 +26,9 @@ public class Growth
     if (!Configuration.configGrowth.Value) return;
     if (!__instance || !__instance.m_nview.IsValid()) return;
     if (__state == __instance.m_updateTime) return;
-    Helper.Int(__instance.m_nview, Hash, growth =>
+    Helper.Int(__instance.m_nview, Hash.Growth, growth =>
     {
-      var healthy = growth == 0;
+      var healthy = growth == 4;
       var unhealthy = growth == 1;
       var healthyGrown = growth == 2;
       var unhealthyGrown = growth == 3;
@@ -53,15 +51,15 @@ public class Growth
   {
     if (!view.IsOwner()) return;
     var number = Number(value);
-    view.GetZDO().Set(Hash, number);
+    view.GetZDO().Set(Hash.Growth, number);
     var date = number < 0 ? ZNet.instance.GetTime().Ticks : DateTime.MaxValue.Ticks / 2L;
-    view.GetZDO().Set(PlantHash, date);
+    view.GetZDO().Set(ZDOVars.s_plantTime, date);
   }
   static void Register(ZNetView view)
   {
     if (!view) return;
-    view.Unregister("SetGrowth");
-    view.Register<string>("SetGrowth", (uid, value) => SetGrowth(view, value));
+    view.Unregister("ST_SetGrowth");
+    view.Register<string>("ST_SetGrowth", (uid, value) => SetGrowth(view, value));
   }
   [HarmonyPatch(typeof(Plant), nameof(Plant.Awake)), HarmonyPostfix]
   static void RegisterRPC(Plant __instance)
@@ -77,8 +75,8 @@ public class GrowthCommand
     if (view.IsOwner())
       Growth.SetGrowth(view, value);
     else
-      view.InvokeRPC("SetWear", value);
-    if (view.GetComponent<Plant>() is { } plant) plant.m_updateTime = 0f;
+      view.InvokeRPC("ST_SetGrowth", value);
+    if (view.TryGetComponent<Plant>(out var plant)) plant.m_updateTime = 0f;
     var number = Growth.Number(value);
     if (number < 0)
       Helper.AddMessage(terminal, "Removed growth override.");

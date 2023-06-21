@@ -6,13 +6,12 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(TeleportWorld), nameof(TeleportWorld.Teleport))]
 public class Teleportable
 {
-  static readonly int Hash = "override_restrict".GetStableHashCode();
   static void Prefix(TeleportWorld __instance)
   {
     if (!Configuration.configTeleportable.Value) return;
-    Helper.Bool(__instance.m_nview, Hash, value =>
+    Helper.Bool(__instance.m_nview, Hash.Restrict, () =>
     {
-      if (!value) ForceTeleportable.Force = true;
+      ForceTeleportable.Force = true;
     });
   }
   static void Postfix()

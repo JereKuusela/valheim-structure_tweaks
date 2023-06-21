@@ -9,7 +9,6 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch]
 public class Unlock
 {
-  private static readonly int Hash = "override_unlock".GetStableHashCode();
 
   private static bool CheckAccess(Component obj, float radius, bool flash, bool wardCheck)
   {
@@ -17,9 +16,9 @@ public class Unlock
     var force = false;
     if (Configuration.configWardUnlock.Value)
     {
-      Helper.Bool(view, Hash, value =>
+      Helper.Bool(view, Hash.Unlock, () =>
       {
-        if (value) force = true;
+        force = true;
       });
     }
     return force || PrivateArea.CheckAccess(obj.transform.position, radius, flash, wardCheck);
@@ -54,7 +53,7 @@ public class Unlock
     if (!canEdit) return result;
 
     var zdo = view.GetZDO();
-    var value = zdo.GetBool(Hash, false);
+    var value = zdo.GetBool(Hash.Unlock);
     if (value)
       return result + Localization.instance.Localize("\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] Remove unlock");
     else
@@ -82,7 +81,7 @@ public class Unlock
     var canEdit = PrivateArea.CheckAccess(point, 0f, false, false);
     if (!canEdit) return true;
     if (!view.HasOwner()) view.ClaimOwnership();
-    view.InvokeRPC("ForceUnlock", !view.GetZDO().GetBool(Hash));
+    view.InvokeRPC("ST_ForceUnlock", !view.GetZDO().GetBool(Hash.Unlock));
     __result = true;
     return false;
   }
@@ -100,13 +99,13 @@ public class Unlock
   }
   static void ForceUnlock(ZNetView view, bool value)
   {
-    view.GetZDO().Set(Hash, value);
+    view.GetZDO().Set(Hash.Unlock, value);
   }
   static void Register(ZNetView view)
   {
     if (!view) return;
-    view.Unregister("ForceUnlock");
-    view.Register<bool>("ForceUnlock", (uid, value) => ForceUnlock(view, value));
+    view.Unregister("ST_ForceUnlock");
+    view.Register<bool>("ST_ForceUnlock", (uid, value) => ForceUnlock(view, value));
   }
   [HarmonyPatch(typeof(Door), nameof(Door.Awake)), HarmonyPostfix]
   static void DoorAwake(Door __instance)

@@ -9,15 +9,9 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(ZNetView), nameof(ZNetView.Awake))]
 public class ZNetViewAwake
 {
-  static readonly int HashWeather = "override_weather".GetStableHashCode();
-  static readonly int HashEvent = "override_event".GetStableHashCode();
-  static readonly int HashEffect = "override_effect".GetStableHashCode();
-  static readonly int HashStatus = "override_status".GetStableHashCode();
-  static readonly int HashComponent = "override_component".GetStableHashCode();
-  static readonly int HashWater = "override_water".GetStableHashCode();
   static void HandleWeather(ZNetView view)
   {
-    var str = view.GetZDO().GetString(HashWeather, "");
+    var str = view.GetZDO().GetString(Hash.Weather);
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
@@ -44,7 +38,7 @@ public class ZNetViewAwake
   }
   static void HandleEvent(ZNetView view)
   {
-    var str = view.GetZDO().GetString(HashEvent, "");
+    var str = view.GetZDO().GetString(Hash.Event);
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
@@ -77,7 +71,7 @@ public class ZNetViewAwake
   }
   static void HandleEffect(ZNetView view)
   {
-    var str = view.GetZDO().GetString(HashEffect, "");
+    var str = view.GetZDO().GetString(Hash.Effect);
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
@@ -102,7 +96,7 @@ public class ZNetViewAwake
   }
   static void HandleStatus(ZNetView view)
   {
-    var str = view.GetZDO().GetString(HashStatus, "");
+    var str = view.GetZDO().GetString(Hash.Status);
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
@@ -129,7 +123,7 @@ public class ZNetViewAwake
   {
     // Adding components to dungeons wouldn't really work.
     if (view.gameObject.GetComponent<DungeonGenerator>()) return;
-    var str = view.GetZDO().GetString(HashComponent, "").ToLower();
+    var str = view.GetZDO().GetString(Hash.Component).ToLower();
     if (str == "") return;
     var values = str.Split(',');
     foreach (var value in values)
@@ -152,7 +146,7 @@ public class ZNetViewAwake
   static readonly string WaterCave = "WaterCube_cave";
   static void HandleWater(ZNetView view)
   {
-    Helper.String(view, HashWater, value =>
+    Helper.String(view, Hash.Water, value =>
     {
       var split = value.Split(',');
       var scale = Helper.TryScale(split, 1);
