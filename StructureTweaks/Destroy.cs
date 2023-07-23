@@ -1,7 +1,9 @@
+using HarmonyLib;
 using Service;
 
 namespace StructureTweaksPlugin;
 
+[HarmonyPatch(typeof(TimedDestruction), nameof(TimedDestruction.DestroyNow))]
 public class Destroy
 {
   public static void Handle(ZNetView view)
@@ -15,5 +17,13 @@ public class Destroy
       td.Trigger();
     });
 
+  }
+  static void Prefix(TimedDestruction __instance)
+  {
+    Helper.String(__instance.m_nview, Hash.DestroyEffect, value =>
+    {
+      var effects = Helper.ParseEffects(value);
+      effects.Create(__instance.transform.position, __instance.transform.rotation, __instance.transform);
+    });
   }
 }

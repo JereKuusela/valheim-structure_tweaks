@@ -5,6 +5,8 @@ public static class Hash
   public static readonly int Name = "override_name".GetStableHashCode();
   // string
   public static readonly int Destroy = "override_destroy".GetStableHashCode();
+  public static readonly int DestroyEffect = "override_destroy_effect".GetStableHashCode();
+  // prefab,flags,variant,childTransform|prefab,flags,variant,childTransform|...
   public static readonly int DungeonWeather = "override_dungeon_weather".GetStableHashCode();
   public static readonly int EnterText = "override_dungeon_enter_text".GetStableHashCode();
   public static readonly int EnterHover = "override_dungeon_enter_hover".GetStableHashCode();

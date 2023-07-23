@@ -131,7 +131,11 @@ public class ZNetViewAwake
       if (value == "runestone" && !view.gameObject.GetComponent<RuneStone>()) view.gameObject.AddComponent<RuneStone>();
       if (value == "chest" && !view.gameObject.GetComponent<Container>()) view.gameObject.AddComponent<Container>();
       if (value == "door" && !view.gameObject.GetComponent<Door>()) view.gameObject.AddComponent<Door>();
-      if (value == "destroy" && !view.gameObject.GetComponent<TimedDestruction>()) view.gameObject.AddComponent<TimedDestruction>();
+      if (value == "destroy" && !view.gameObject.GetComponent<TimedDestruction>())
+      {
+        UnityEngine.Object.Destroy(view.gameObject.GetComponent<Growup>());
+        view.gameObject.AddComponent<TimedDestruction>();
+      }
       if (value == "portal" && !view.gameObject.GetComponent<TeleportWorld>()) view.gameObject.AddComponent<TeleportWorld>();
       /*if (value == "music" && !view.gameObject.GetComponent<MusicLocation>())
       {
@@ -169,6 +173,15 @@ public class ZNetViewAwake
         var tr = room.m_room.transform.Find(water);
         if (tr)
         {
+          if (Configuration.configWaterHideParent.Value)
+          {
+            var renderers = view.GetComponentsInChildren<Renderer>();
+            foreach (var renderer in renderers)
+              renderer.enabled = false;
+            var colliders = view.GetComponentsInChildren<Collider>();
+            foreach (var collider in colliders)
+              collider.isTrigger = true;
+          }
           var obj = UnityEngine.Object.Instantiate(tr.gameObject, view.transform);
           obj.transform.localPosition = Vector3.zero;
           obj.transform.localRotation = Quaternion.identity;

@@ -28,6 +28,7 @@ public class Configuration
   public static ConfigEntry<bool> configIgnoreDamage;
   public static ConfigEntry<bool> configIgnoreRemove;
   public static ConfigEntry<bool> configIgnoreSupport;
+  public static ConfigEntry<bool> configWaterHideParent;
 #nullable enable
   public static void Init(ConfigWrapper wrapper)
   {
@@ -53,6 +54,7 @@ public class Configuration
     configWear = wrapper.Bind(section, "Override wear", true, "Wear visual can be overridden.");
     configEffects = wrapper.Bind(section, "Override effects", true, "New area effects can be added.");
     configWardUnlock = wrapper.Bind(section, "Override unlock", true, "Chests and doors can be force unlocked.");
+    configWaterHideParent = wrapper.Bind(section, "Water hides the parent object", false, "If enabled, adding water hides and removes the collider of the parent object.");
     section = "2. Commands";
     var editingModes = new string[] { "Admin only", "Owned", "All" };
     configGrowthEditing = wrapper.Bind(section, "Command growth", "Owned", new ConfigDescription("Growth editing", new AcceptableValueList<string>(editingModes)));

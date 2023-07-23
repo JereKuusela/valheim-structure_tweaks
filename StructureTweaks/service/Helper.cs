@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using UnityEngine;
 
 namespace Service;
@@ -198,4 +199,35 @@ public class Helper
     return view.gameObject.AddComponent<T>();
   }
 
+  public static EffectList ParseEffects(string data)
+  {
+    var effects = data.Split('|').Select(effect => ParseEffect(effect)!).Where(effect => effect != null);
+    EffectList list = new()
+    {
+      m_effectPrefabs = effects.ToArray()
+    };
+    return list;
+  }
+  public static EffectList.EffectData? ParseEffect(string data)
+  {
+    var split = data.Split(',');
+    EffectList.EffectData effect = new()
+    {
+      m_prefab = GetPrefab(split[0])
+    };
+    if (effect.m_prefab == null) return null;
+    if (split.Length > 1 && int.TryParse(split[1], out var flag))
+    {
+      effect.m_randomRotation = (flag & 1) > 0;
+      effect.m_inheritParentRotation = (flag & 2) > 0;
+      effect.m_scale = (flag & 4) > 0;
+      effect.m_inheritParentScale = (flag & 8) > 0;
+      effect.m_attach = (flag & 16) > 0;
+    }
+    if (split.Length > 2 && int.TryParse(split[2], out var variant))
+      effect.m_variant = variant;
+    if (split.Length > 3)
+      effect.m_childTransform = split[3];
+    return effect;
+  }
 }
