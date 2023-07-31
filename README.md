@@ -37,6 +37,7 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 - Override runestones: Runestone properties can be overridden.
 - Override unlock: Chests and doors can be force unlocked.
 - Override wear: Wear visual can be overridden.
+- Water hides the parent object: If enabled, adding water hides the parent object automatically.
 - Allow unlocking chests: Players can unlock chests to ignore wards.
 - Allow unlocking doors: Players can unlock doors to ignore wards.
 - Allow editing runestones: Runestone editing (Admin only, Owned, All).

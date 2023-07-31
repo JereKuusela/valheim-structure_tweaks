@@ -138,6 +138,11 @@ public class Helper
     if (view == null || !view.IsValid()) return false;
     return view.GetZDO().GetBool(hash);
   }
+  public static int Int(ZNetView? view, int hash)
+  {
+    if (view == null || !view.IsValid()) return 0;
+    return view.GetZDO().GetInt(hash);
+  }
   public static void String(ZNetView? view, int hash, Action<string> action)
   {
     if (view == null || !view.IsValid()) return;

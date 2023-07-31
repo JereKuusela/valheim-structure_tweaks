@@ -41,7 +41,8 @@ public static class Hash
   // string
   public static readonly int Discover = "override_discover".GetStableHashCode();
   // string
-  public static readonly int SmokeNoBlock = "override_smoke".GetStableHashCode();
+  public static readonly int Smoke = "override_smoke".GetStableHashCode();
+  // 0 = on, 1 = off, 2 = no block
   public static readonly int Restrict = "override_restrict".GetStableHashCode();
   public static readonly int Wear = "override_wear".GetStableHashCode();
 }
