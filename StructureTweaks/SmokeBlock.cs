@@ -11,7 +11,7 @@ public class SmokeBlock
     if (!Configuration.configSmokeBlock.Value) return result;
     if (!result) return result;
     var view = __instance.GetComponentInParent<ZNetView>();
-    return Helper.Bool(view, Hash.Smoke);
+    return !Helper.Bool(view, Hash.SmokeNoBlock);
   }
 }
 [HarmonyPatch(typeof(SmokeSpawner), nameof(SmokeSpawner.Spawn))]
@@ -21,6 +21,6 @@ public class SmokeSpawn
   {
     if (!Configuration.configSmokeBlock.Value) return true;
     var view = __instance.GetComponentInParent<ZNetView>();
-    return Helper.Bool(view, Hash.Smoke); ;
+    return Helper.Bool(view, Hash.SmokeNoBlock);
   }
 }
