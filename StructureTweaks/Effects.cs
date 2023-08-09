@@ -76,10 +76,12 @@ public class ZNetViewAwake
     var values = str.Split(',');
     if (values.Length < 2) return;
     var size = Helper.Float(values[0]);
+    var playerOnly = values.Length > 2 && Helper.IsTruthy(values[values.Length - 1]);
     if (view.TryGetComponent<EffectArea>(out var effect))
     {
       if (size != 0f) effect.transform.localScale = Vector3.one * size;
       effect.m_type = ParseType(values.Skip(1).ToArray());
+      effect.m_playerOnly = playerOnly;
       return;
     }
     if (size == 0f) return;
@@ -90,6 +92,7 @@ public class ZNetViewAwake
     effect = obj.AddComponent<EffectArea>();
     effect.m_collider = collider;
     effect.m_type = ParseType(values.Skip(1).ToArray());
+    effect.m_playerOnly = playerOnly;
     obj.transform.parent = view.transform;
     obj.transform.localPosition = Vector3.zero;
     obj.transform.localRotation = Quaternion.identity;
@@ -101,10 +104,13 @@ public class ZNetViewAwake
     var values = str.Split(',');
     if (values.Length < 2) return;
     var size = Helper.Float(values[0]);
+    var playerOnly = values.Length > 2 && Helper.IsTruthy(values[2]);
     if (view.TryGetComponent<EffectArea>(out var effect))
     {
       if (size != 0f) effect.transform.localScale = Vector3.one * size;
       effect.m_statusEffect = values[1];
+      effect.m_statusEffectHash = effect.m_statusEffect.GetStableHashCode();
+      effect.m_playerOnly = playerOnly;
       return;
     }
     if (size == 0f) return;
@@ -115,6 +121,9 @@ public class ZNetViewAwake
     effect = obj.AddComponent<EffectArea>();
     effect.m_collider = collider;
     effect.m_statusEffect = values[1];
+    effect.m_statusEffectHash = effect.m_statusEffect.GetStableHashCode();
+    effect.m_type = 0;
+    effect.m_playerOnly = playerOnly;
     obj.transform.parent = view.transform;
     obj.transform.localPosition = Vector3.zero;
     obj.transform.localRotation = Quaternion.identity;

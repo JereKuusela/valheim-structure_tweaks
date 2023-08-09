@@ -1,3 +1,6 @@
+- v1.20
+  - Fixes status effect areas not working.
+
 - v1.19
   - Adds a new setting to hide the parent object of water.
   - Fixes smoke being always off.

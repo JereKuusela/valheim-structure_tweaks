@@ -189,6 +189,13 @@ public class Helper
     return scale;
   }
 
+  private static readonly HashSet<string> Truthies = new() {
+    "1",
+    "true",
+    "yes",
+    "on"
+  };
+  public static bool IsTruthy(string value) => Truthies.Contains(value);
   private static readonly HashSet<string> Falsies = new() {
     "0",
     "false",
