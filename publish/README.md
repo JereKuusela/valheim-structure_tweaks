@@ -4,7 +4,7 @@ Changes the game logic to allow invisible, invulnerable, non-colliding, non-inte
 
 Install on all clients and on the server (modding [guide](https://youtu.be/L9ljm2eKLrk)).
 
-# Usage
+## Usage
 
 Two commands that allow changing visual growth or wear of own plants and structures. This can be disabled from the config.
 
@@ -13,12 +13,12 @@ Two commands that allow changing visual growth or wear of own plants and structu
 
 For other changes you need mods like [Infinity Hammer](https://valheim.thunderstore.io/package/JereKuusela/Infinity_Hammer/) or [World Edit Commands](https://valheim.thunderstore.io/package/JereKuusela/World_Edit_Commands/).
 
-# Tutorials
+## Tutorials
 
-- World Edit basic usage: https://youtu.be/Bwkb3XadSl0 (28 minutes, created by StonedProphet)
-- World Edit Structure Tweaks: https://youtu.be/OaGO9Vis6uE (16 minutes, created by StonedProphet)
+- World Edit basic usage: <https://youtu.be/Bwkb3XadSl0> (28 minutes, created by StonedProphet)
+- World Edit Structure Tweaks: <https://youtu.be/OaGO9Vis6uE> (16 minutes, created by StonedProphet)
 
-# Config
+## Config
 
 - All objects can be scaled : Scaling works for every object.
 - Disable structure system: Structure systems are disabled for all pieces. Not enabled by default.
@@ -43,7 +43,7 @@ For other changes you need mods like [Infinity Hammer](https://valheim.thunderst
 - Command growth: Growth editing (Admin only, Owned, All).
 - Command wear: Wear editing (Admin only, Owned, All).
 
-# Credits
+## Credits
 
 Thanks for Azumatt for creating the mod icon!
 
