@@ -14,9 +14,12 @@ public class VegvisirText
     Helper.String(view, Hash.Discover, value =>
     {
       var discovery = Helper.ParseDiscovery(value);
-      obj.m_locationName = discovery.name;
-      obj.m_pinName = discovery.pin;
-      obj.m_pinType = discovery.type;
+      if (obj.m_locations.Count == 0)
+        obj.m_locations.Add(new());
+      var location = obj.m_locations[0];
+      location.m_locationName = discovery.name;
+      location.m_pinName = discovery.pin;
+      location.m_pinType = discovery.type;
     });
   }
 
