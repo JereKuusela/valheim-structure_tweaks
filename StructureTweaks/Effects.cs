@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using HarmonyLib;
+using JetBrains.Annotations;
 using Service;
 using UnityEngine;
 
@@ -71,63 +72,49 @@ public class ZNetViewAwake
   }
   static void HandleEffect(ZNetView view)
   {
-    var str = view.GetZDO().GetString(Hash.Effect);
-    if (str == "") return;
-    var values = str.Split(',');
-    if (values.Length < 2) return;
-    var size = Helper.Float(values[0]);
-    var playerOnly = values.Length > 2 && Helper.IsTruthy(values[values.Length - 1]);
-    if (view.TryGetComponent<EffectArea>(out var effect))
+    var component = view.GetComponentInChildren<EffectArea>();
+    if (component)
     {
-      if (size != 0f) effect.transform.localScale = Vector3.one * size;
-      effect.m_type = ParseType(values.Skip(1).ToArray());
-      effect.m_playerOnly = playerOnly;
-      return;
+      UnityEngine.Object.Destroy(component.m_collider);
+      UnityEngine.Object.Destroy(component);
     }
-    if (size == 0f) return;
+
     GameObject obj = new();
     var collider = obj.AddComponent<SphereCollider>();
     collider.isTrigger = true;
-    collider.radius = size;
-    effect = obj.AddComponent<EffectArea>();
+    var effect = obj.AddComponent<CustomEffectArea>();
     effect.m_collider = collider;
-    effect.m_type = ParseType(values.Skip(1).ToArray());
-    effect.m_playerOnly = playerOnly;
     obj.transform.parent = view.transform;
     obj.transform.localPosition = Vector3.zero;
     obj.transform.localRotation = Quaternion.identity;
-  }
-  static void HandleStatus(ZNetView view)
-  {
+
     var str = view.GetZDO().GetString(Hash.Status);
-    if (str == "") return;
-    var values = str.Split(',');
-    if (values.Length < 2) return;
-    var size = Helper.Float(values[0]);
-    var playerOnly = values.Length > 2 && Helper.IsTruthy(values[2]);
-    if (view.TryGetComponent<EffectArea>(out var effect))
+    if (str != "")
     {
-      if (size != 0f) effect.transform.localScale = Vector3.one * size;
-      effect.m_statusEffect = values[1];
-      effect.m_statusEffectHash = effect.m_statusEffect.GetStableHashCode();
-      effect.m_playerOnly = playerOnly;
-      return;
+      var values = str.Split(',');
+      if (values.Length > 1)
+      {
+        collider.radius = Math.Max(collider.radius, Helper.Float(values[0]));
+        effect.m_playerOnly = effect.m_playerOnly || values.Length > 2 && Helper.IsTruthy(values[values.Length - 1]);
+        effect.m_statusEffect = values[1];
+        effect.m_statusEffectHash = effect.m_statusEffect.GetStableHashCode();
+        effect.m_type = 0;
+      }
     }
-    if (size == 0f) return;
-    GameObject obj = new();
-    var collider = obj.AddComponent<SphereCollider>();
-    collider.isTrigger = true;
-    collider.radius = size;
-    effect = obj.AddComponent<EffectArea>();
-    effect.m_collider = collider;
-    effect.m_statusEffect = values[1];
-    effect.m_statusEffectHash = effect.m_statusEffect.GetStableHashCode();
-    effect.m_type = 0;
-    effect.m_playerOnly = playerOnly;
-    obj.transform.parent = view.transform;
-    obj.transform.localPosition = Vector3.zero;
-    obj.transform.localRotation = Quaternion.identity;
+
+    str = view.GetZDO().GetString(Hash.Effect);
+    if (str != "")
+    {
+      var values = str.Split(',');
+      if (values.Length > 1)
+      {
+        collider.radius = Math.Max(collider.radius, Helper.Float(values[0]));
+        effect.m_type = ParseType(values.Skip(1).ToArray());
+        effect.m_playerOnly = effect.m_playerOnly || values.Length > 2 && Helper.IsTruthy(values[values.Length - 1]);
+      }
+    }
   }
+
   static void HandleComponent(ZNetView view)
   {
     // Adding components to dungeons wouldn't really work.
@@ -206,9 +193,24 @@ public class ZNetViewAwake
     HandleWeather(__instance);
     HandleEvent(__instance);
     HandleEffect(__instance);
-    HandleStatus(__instance);
     HandleComponent(__instance);
     HandleWater(__instance);
     Destroy.Handle(__instance);
+  }
+}
+
+public class CustomEffectArea : EffectArea
+{
+  public void OnTriggerExit(Collider collider)
+  {
+    if (ZNet.instance == null) return;
+    if (string.IsNullOrEmpty(m_statusEffect)) return;
+    var component = collider.GetComponent<Character>();
+    if (!component) return;
+    if (!component.IsOwner()) return;
+    if (m_playerOnly && !component.IsPlayer()) return;
+    var seMan = component.GetSEMan();
+    var se = seMan.GetStatusEffect(m_statusEffectHash);
+    if (se && se.m_ttl == 0f) seMan.RemoveStatusEffect(m_statusEffectHash);
   }
 }
