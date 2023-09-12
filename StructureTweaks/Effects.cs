@@ -72,6 +72,9 @@ public class ZNetViewAwake
   }
   static void HandleEffect(ZNetView view)
   {
+    var statusStr = view.GetZDO().GetString(Hash.Status);
+    var effectStr = view.GetZDO().GetString(Hash.Effect);
+    if (statusStr == "" && effectStr == "") return;
     var component = view.GetComponentInChildren<EffectArea>();
     if (component)
     {
@@ -88,10 +91,9 @@ public class ZNetViewAwake
     obj.transform.localPosition = Vector3.zero;
     obj.transform.localRotation = Quaternion.identity;
 
-    var str = view.GetZDO().GetString(Hash.Status);
-    if (str != "")
+    if (statusStr != "")
     {
-      var values = str.Split(',');
+      var values = statusStr.Split(',');
       if (values.Length > 1)
       {
         collider.radius = Math.Max(collider.radius, Helper.Float(values[0]));
@@ -102,10 +104,9 @@ public class ZNetViewAwake
       }
     }
 
-    str = view.GetZDO().GetString(Hash.Effect);
-    if (str != "")
+    if (effectStr != "")
     {
-      var values = str.Split(',');
+      var values = statusStr.Split(',');
       if (values.Length > 1)
       {
         collider.radius = Math.Max(collider.radius, Helper.Float(values[0]));

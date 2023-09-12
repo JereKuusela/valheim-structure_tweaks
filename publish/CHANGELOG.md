@@ -1,3 +1,6 @@
+- v1.23
+  - Fix to the previous fix.
+
 - v1.22
   - Fixes status effect areas without duration not being removed when exiting the area.
 
