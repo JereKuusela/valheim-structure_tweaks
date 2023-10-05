@@ -9,7 +9,7 @@ public class Plugin : BaseUnityPlugin
 {
   const string GUID = "structure_tweaks";
   const string NAME = "Structure Tweaks";
-  const string VERSION = "1.23";
+  const string VERSION = "1.24";
   public static ServerSync.ConfigSync ConfigSync = new(GUID)
   {
     DisplayName = NAME,

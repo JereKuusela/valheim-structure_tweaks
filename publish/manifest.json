@@ -1,9 +1,9 @@
 {
   "name": "Structure_Tweaks",
-  "version_number": "1.23.0",
+  "version_number": "1.24.0",
   "website_url": "https://github.com/JereKuusela/valheim-structure_tweaks",
   "description": "Changes the game logic to allow invisible, invulnerable, non-colliding, non-interactable or untargetable objects. Also allow overriding visual wear and plant growth.",
   "dependencies": [
-    "denikson-BepInExPack_Valheim-5.4.2105"
+    "denikson-BepInExPack_Valheim-5.4.2200"
   ]
 }
