@@ -12,6 +12,12 @@ public static class Hash
   public static readonly int EnterHover = "override_dungeon_enter_hover".GetStableHashCode();
   public static readonly int ExitText = "override_dungeon_exit_text".GetStableHashCode();
   public static readonly int ExitHover = "override_dungeon_exit_hover".GetStableHashCode();
+  public static readonly int DoorKey = "override_door_key".GetStableHashCode();
+  public static readonly int DoorNoClose = "override_door_no_close".GetStableHashCode();
+  public static readonly int DoorConsume = "override_door_consume".GetStableHashCode();
+  public static readonly int DoorOpenEffect = "override_open_effect".GetStableHashCode();
+  public static readonly int DoorCloseEffect = "override_close_effect".GetStableHashCode();
+  public static readonly int DoorLockedEffect = "override_locked_effect".GetStableHashCode();
   public static readonly int Weather = "override_weather".GetStableHashCode();
   public static readonly int Event = "override_event".GetStableHashCode();
   public static readonly int Effect = "override_effect".GetStableHashCode();

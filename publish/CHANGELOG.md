@@ -1,3 +1,6 @@
+- v1.25
+  - Adds support for changing doors.
+
 - v1.24
   - Fixed for the new update.
 

@@ -3,6 +3,7 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using Service;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 namespace StructureTweaksPlugin;
 
@@ -111,10 +112,41 @@ public class Unlock
   static void DoorAwake(Door __instance)
   {
     Register(__instance.m_nview);
+    Helper.Item(__instance.m_nview, Hash.DoorKey, item =>
+    {
+      __instance.m_keyItem = item;
+    });
+    Helper.Int(__instance.m_nview, Hash.DoorNoClose, value =>
+    {
+      __instance.m_canNotBeClosed = value > 0;
+    });
+    Helper.String(__instance.m_nview, Hash.DoorOpenEffect, value =>
+    {
+      __instance.m_openEffects = Helper.ParseEffects(value);
+    });
+    Helper.String(__instance.m_nview, Hash.DoorCloseEffect, value =>
+    {
+      __instance.m_closeEffects = Helper.ParseEffects(value);
+    });
+    Helper.String(__instance.m_nview, Hash.DoorLockedEffect, value =>
+    {
+      __instance.m_lockedEffects = Helper.ParseEffects(value);
+    });
+
   }
   [HarmonyPatch(typeof(Container), nameof(Container.Awake)), HarmonyPostfix]
   static void ContainerAwake(Container __instance)
   {
     Register(__instance.m_nview);
+  }
+  [HarmonyPatch(typeof(Door), nameof(Door.Open)), HarmonyPostfix]
+  static void DoorOpen(Door __instance)
+  {
+    Helper.Bool(__instance.m_nview, Hash.DoorConsume, () =>
+    {
+      var key = __instance.m_keyItem?.m_itemData?.m_shared.m_name;
+      if (key != null)
+        Player.m_localPlayer?.GetInventory().RemoveItem(key, 1);
+    });
   }
 }

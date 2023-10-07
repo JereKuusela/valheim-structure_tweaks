@@ -85,7 +85,7 @@ public class Helper
   public static GameObject? GetPrefab(string hashStr)
   {
     if (int.TryParse(hashStr, out var hash)) return GetPrefab(hash);
-    return null;
+    return GetPrefab(hashStr.GetStableHashCode());
   }
   public static GameObject? GetPrefab(int hash)
   {
@@ -150,12 +150,30 @@ public class Helper
     if (value == "") return;
     action(value);
   }
-  public static void Prefab(ZNetView? view, int hash, Action<GameObject> action)
+  public static bool Prefab(ZNetView? view, int hash, Action<GameObject> action)
+  {
+    if (view == null || !view.IsValid()) return false;
+    var value = view.GetZDO().GetInt(hash);
+    if (value == 0)
+      value = view.GetZDO().GetString(hash).GetStableHashCode();
+    var prefab = GetPrefab(value);
+    if (prefab == null) return false;
+    action(prefab);
+    return true;
+  }
+  public static ItemDrop? GetItem(int hash)
+  {
+    return GetPrefab(hash)?.GetComponent<ItemDrop>();
+  }
+  public static void Item(ZNetView view, int hash, Action<ItemDrop> action)
   {
     if (view == null || !view.IsValid()) return;
-    var prefab = GetPrefab(hash);
-    if (prefab == null) return;
-    action(prefab);
+    var value = view.GetZDO().GetInt(hash);
+    if (value == 0)
+      value = view.GetZDO().GetString(hash).GetStableHashCode();
+    var item = GetItem(value);
+    if (item == null) return;
+    action(item);
   }
 
   public static bool CanEdit(ZNetView? view, string mode)
