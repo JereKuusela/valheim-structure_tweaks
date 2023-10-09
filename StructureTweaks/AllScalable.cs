@@ -1,13 +1,31 @@
 using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
+using UnityEngine;
 
 namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.Awake))]
 public class AllScalable
 {
-  static readonly Dictionary<int, bool> Originals = new();
+  static readonly Dictionary<int, bool> Originals = [];
+  public static readonly HashSet<int> HasSystems = [];
   public static void Update() => Update(ZNetScene.instance);
+  public static void UpdateParticles(ZNetScene scene)
+  {
+    var objs = scene.m_namedPrefabs.Values.Where(v => v.GetComponent<Fireplace>()).ToArray();
+    List<ParticleSystem> results = [];
+    foreach (var obj in scene.m_namedPrefabs.Values)
+    {
+      obj.GetComponentsInChildren(true, results);
+      foreach (var system in results)
+      {
+        if (system.main.scalingMode != ParticleSystemScalingMode.Local) continue;
+        var main = system.main;
+        main.scalingMode = ParticleSystemScalingMode.Hierarchy;
+      }
+    }
+  }
   public static void Update(int prefab, ZNetView obj)
   {
     if (Configuration.configAllScalable.Value)
@@ -17,7 +35,7 @@ public class AllScalable
   }
   public static void Update(ZNetScene scene)
   {
-    Dictionary<int, bool> Values = new();
+    Dictionary<int, bool> Values = [];
     foreach (var kvp in scene.m_namedPrefabs)
     {
       if (kvp.Value.GetComponent<ZNetView>() is { } view)
@@ -43,5 +61,6 @@ public class AllScalable
         Originals[kvp.Key] = view.m_syncInitialScale;
     }
     Update(__instance);
+    UpdateParticles(__instance);
   }
 }

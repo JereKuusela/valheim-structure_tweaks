@@ -18,7 +18,7 @@ public class LocationAwake
       if (zone)
         zone.m_environment = value;
     });
-    Teleport[] portals = new Teleport[0];
+    Teleport[] portals = [];
     Helper.String(__instance.m_nview, Hash.EnterText, value =>
     {
       if (portals.Length == 0)

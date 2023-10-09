@@ -1,3 +1,6 @@
+- v1.26
+  - Fixes fire of fireplaces not scaling.
+
 - v1.25
   - Adds support for changing doors.
 
