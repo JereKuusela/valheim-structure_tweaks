@@ -1,3 +1,6 @@
+- v1.27
+  - Fixes some weird things.
+
 - v1.26
   - Fixes fire of fireplaces not scaling.
 

@@ -15,7 +15,7 @@ public class AllScalable
   {
     var objs = scene.m_namedPrefabs.Values.Where(v => v.GetComponent<Fireplace>()).ToArray();
     List<ParticleSystem> results = [];
-    foreach (var obj in scene.m_namedPrefabs.Values)
+    foreach (var obj in objs)
     {
       obj.GetComponentsInChildren(true, results);
       foreach (var system in results)
