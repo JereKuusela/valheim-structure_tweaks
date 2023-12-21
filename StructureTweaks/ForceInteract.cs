@@ -49,7 +49,7 @@ public class Unlock
 
   static string OverrideHoverText(string result, ZNetView view, Vector3 point)
   {
-    if (!Configuration.configWardUnlock.Value) return result;
+    if (!Configuration.configWardUnlock.Value || !view) return result;
     var canEdit = PrivateArea.CheckAccess(point, 0f, false, false);
     if (!canEdit) return result;
 
