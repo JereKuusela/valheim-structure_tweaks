@@ -1,3 +1,6 @@
+- v1.28
+  - Fixes crypt water not working.
+
 - v1.27
   - Fixes some weird things.
 

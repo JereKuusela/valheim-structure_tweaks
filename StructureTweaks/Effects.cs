@@ -141,7 +141,7 @@ public class ZNetViewAwake
       }*/
     }
   }
-  static readonly int RoomCrypt = "sunkencrypt_WaterTunnel".GetStableHashCode();
+  static readonly int RoomCrypt = "sunkencrypt_new_Corridor1".GetStableHashCode();
   static readonly string WaterCrypt = "WaterCube_sunkencrypt";
   static readonly int RoomCave = "cave_new_deeproom_bottom_lake".GetStableHashCode();
   static readonly string WaterCave = "WaterCube_cave";
