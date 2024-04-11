@@ -1,3 +1,8 @@
+- v1.29
+  - Fixes effect areas not working.
+  - Fixes effect areas and status effects not working for fire places.
+  - Fixed for the new game version.
+
 - v1.28
   - Fixes crypt water not working.
 

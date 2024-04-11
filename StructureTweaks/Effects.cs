@@ -75,19 +75,26 @@ public class ZNetViewAwake
     var statusStr = view.GetZDO().GetString(Hash.Status);
     var effectStr = view.GetZDO().GetString(Hash.Effect);
     if (statusStr == "" && effectStr == "") return;
-    var component = view.GetComponentInChildren<EffectArea>();
-    if (component)
+    var components = view.GetComponentsInChildren<EffectArea>(true);
+    foreach (var component in components)
     {
+      var parent = component.transform.parent;
       UnityEngine.Object.Destroy(component.m_collider);
       UnityEngine.Object.Destroy(component);
+      AddEffect(parent, statusStr, effectStr);
     }
+    if (components.Length == 0)
+      AddEffect(view.transform, statusStr, effectStr);
+  }
 
+  private static void AddEffect(Transform parent, string statusStr, string effectStr)
+  {
     GameObject obj = new();
     var collider = obj.AddComponent<SphereCollider>();
     collider.isTrigger = true;
     var effect = obj.AddComponent<CustomEffectArea>();
     effect.m_collider = collider;
-    obj.transform.parent = view.transform;
+    obj.transform.parent = parent;
     obj.transform.localPosition = Vector3.zero;
     obj.transform.localRotation = Quaternion.identity;
 
@@ -97,16 +104,22 @@ public class ZNetViewAwake
       if (values.Length > 1)
       {
         collider.radius = Math.Max(collider.radius, Helper.Float(values[0]));
-        effect.m_playerOnly = effect.m_playerOnly || values.Length > 2 && Helper.IsTruthy(values[values.Length - 1]);
+        effect.m_playerOnly = effect.m_playerOnly || values.Length > 2 && Helper.IsTruthy(values[2]);
         effect.m_statusEffect = values[1];
         effect.m_statusEffectHash = effect.m_statusEffect.GetStableHashCode();
         effect.m_type = 0;
+        if (values.Length > 3)
+          effect.m_duration = Helper.Float(values[3]);
+        if (values.Length > 4)
+          effect.m_damage = Helper.Float(values[4]);
+        if (values.Length > 5)
+          effect.m_interval = Helper.Float(values[5]);
       }
     }
 
     if (effectStr != "")
     {
-      var values = statusStr.Split(',');
+      var values = effectStr.Split(',');
       if (values.Length > 1)
       {
         collider.radius = Math.Max(collider.radius, Helper.Float(values[0]));
@@ -167,7 +180,10 @@ public class ZNetViewAwake
       }
       if (DungeonDB.instance.m_roomByHash.TryGetValue(roomHash, out var room))
       {
-        var tr = room.m_room.transform.Find(water);
+        if (!room.m_prefab.IsLoaded)
+          room.m_prefab.Load();
+        var tr = room.m_prefab.Asset.transform.Find(water);
+        // Never release to keep the asset loaded.
         if (tr)
         {
           if (Configuration.configWaterHideParent.Value)
@@ -202,6 +218,9 @@ public class ZNetViewAwake
 
 public class CustomEffectArea : EffectArea
 {
+  public float m_duration = 0f;
+  public float m_damage = 0f;
+  public float m_interval = 0f;
   public void OnTriggerExit(Collider collider)
   {
     if (ZNet.instance == null) return;
@@ -213,5 +232,82 @@ public class CustomEffectArea : EffectArea
     var seMan = component.GetSEMan();
     var se = seMan.GetStatusEffect(m_statusEffectHash);
     if (se && se.m_ttl == 0f) seMan.RemoveStatusEffect(m_statusEffectHash);
+  }
+
+  public new void OnTriggerStay(Collider collider)
+  {
+    var target = collider.GetComponent<Character>();
+    if (!target || !target.IsOwner()) return;
+    if (m_playerOnly && !target.IsPlayer())
+      return;
+    if (!string.IsNullOrEmpty(m_statusEffect))
+    {
+      var seMan = target.GetSEMan();
+      var se = seMan.GetStatusEffect(m_statusEffectHash);
+      if (se == null)
+        se = seMan.AddStatusEffect(m_statusEffectHash, true, 0, 0f);
+      else
+        se.ResetTime();
+      // With damage, existing higher damage effects should be kept.
+      if (m_damage == 0f && m_duration != 0f)
+        se.m_ttl = m_duration;
+      if (m_damage != 0f)
+      {
+        if (se is SE_Burning burning)
+        {
+          if (burning.m_fireDamageLeft > 0f || se.m_nameHash == Character.s_statusEffectBurning)
+          {
+            var mod = target.GetDamageModifier(HitData.DamageType.Fire);
+            var damage = m_damage * ModToMultiplier(mod);
+            if (burning.m_fireDamageLeft < damage)
+            {
+              se.m_ttl = m_duration;
+              if (m_interval != 0f)
+                burning.m_damageInterval = m_interval;
+              burning.m_fireDamageLeft = damage;
+              burning.m_fireDamagePerHit = damage * burning.m_damageInterval / se.m_ttl;
+            }
+          }
+          else
+          {
+            var mod = target.GetDamageModifier(HitData.DamageType.Spirit);
+            var damage = m_damage * ModToMultiplier(mod);
+            if (burning.m_spiritDamageLeft < damage)
+            {
+              se.m_ttl = m_duration;
+              if (m_interval != 0f)
+                burning.m_damageInterval = m_interval;
+              burning.m_spiritDamageLeft = damage;
+              burning.m_spiritDamagePerHit = damage * burning.m_damageInterval / se.m_ttl;
+            }
+          }
+        }
+        if (se is SE_Poison poison)
+        {
+          var mod = target.GetDamageModifier(HitData.DamageType.Poison);
+          var damage = m_damage * ModToMultiplier(mod);
+          if (poison.m_damageLeft < damage)
+          {
+            se.m_ttl = m_duration;
+            if (m_interval != 0f)
+              poison.m_damageInterval = m_interval;
+            poison.m_damageLeft = damage;
+            poison.m_damagePerHit = damage * poison.m_damageInterval / se.m_ttl;
+          }
+        }
+      }
+    }
+    if ((m_type & Type.Heat) != Type.None)
+      target.OnNearFire(transform.position);
+  }
+  private static float ModToMultiplier(HitData.DamageModifier mod)
+  {
+    if (mod == HitData.DamageModifier.Resistant) return 0.5f;
+    if (mod == HitData.DamageModifier.VeryResistant) return 0.25f;
+    if (mod == HitData.DamageModifier.Weak) return 1.5f;
+    if (mod == HitData.DamageModifier.VeryWeak) return 2f;
+    if (mod == HitData.DamageModifier.Immune) return 0f;
+    if (mod == HitData.DamageModifier.Ignore) return 0f;
+    return 1f;
   }
 }
