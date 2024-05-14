@@ -17,7 +17,7 @@ public class IgnoreSupport
       // Copy pasted from the base game (not related to wear).
       if (__instance.m_wet)
       {
-        var isWet = EnvMan.instance.IsWet() && !__instance.HaveRoof();
+        var isWet = EnvMan.IsWet() && !__instance.HaveRoof();
         __instance.m_wet.SetActive(isWet);
       }
       var zdo = __instance.m_nview.GetZDO();

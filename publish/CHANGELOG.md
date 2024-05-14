@@ -1,3 +1,6 @@
+- v1.30
+  - Fixed for the new game version.
+
 - v1.29
   - Fixes effect areas not working.
   - Fixes effect areas and status effects not working for fire places.
