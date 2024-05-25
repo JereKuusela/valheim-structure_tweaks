@@ -2,33 +2,24 @@ using HarmonyLib;
 
 namespace StructureTweaksPlugin;
 
-[HarmonyPatch(typeof(WearNTear), nameof(WearNTear.UpdateWear))]
+[HarmonyPatch(typeof(WearNTear))]
 public class IgnoreSupport
 {
   public const float INFITE = 1E19F;
-  private static bool Check(ZNetView view, float defaultValue) => !Configuration.configIgnoreSupport.Value || view.GetZDO().GetFloat(ZDOVars.s_health, defaultValue) < INFITE;
-  static bool Prefix(WearNTear __instance)
+
+  [HarmonyPatch(nameof(WearNTear.UpdateWear)), HarmonyPrefix]
+  static bool UpdateWear() => !Configuration.configDisableStructureSystems.Value;
+
+  [HarmonyPatch(nameof(WearNTear.UpdateSupport)), HarmonyPrefix]
+  static bool UpdateSupport(WearNTear __instance)
   {
-    if (Configuration.configDisableStructureSystems.Value) return false;
+    if (!Configuration.configIgnoreSupport.Value) return true;
     if (!__instance || !__instance.m_nview.IsValid()) return true;
-    var check = Check(__instance.m_nview, __instance.m_health);
-    if (!check && __instance.m_nview.IsOwner() && __instance.ShouldUpdate())
-    {
-      // Copy pasted from the base game (not related to wear).
-      if (__instance.m_wet)
-      {
-        var isWet = EnvMan.IsWet() && !__instance.HaveRoof();
-        __instance.m_wet.SetActive(isWet);
-      }
-      var zdo = __instance.m_nview.GetZDO();
-      if (ZDOExtraData.s_floats.TryGetValue(zdo.m_uid, out var data) && data.ContainsKey(ZDOVars.s_support))
-        zdo.Set(ZDOVars.s_support, __instance.GetMaxSupport());
-    }
-    if (!check)
-    {
-      __instance.m_support = INFITE;
-      __instance.UpdateVisual(false);
-    }
-    return check;
+    var view = __instance.m_nview;
+    if (view.GetZDO().GetFloat(ZDOVars.s_health, __instance.m_health) < INFITE) return true;
+    if (__instance.m_support == INFITE) return false;
+    __instance.m_support = INFITE;
+    view.GetZDO().Set(ZDOVars.s_support, INFITE);
+    return false;
   }
 }

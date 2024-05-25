@@ -1,3 +1,6 @@
+- v1.31
+  - Possibly fixes some env related issues.
+
 - v1.30
   - Fixed for the new game version.
 
