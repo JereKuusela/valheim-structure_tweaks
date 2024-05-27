@@ -1,3 +1,6 @@
+- v1.32
+  - Fixes infinite health checks not working with -1 health.
+
 - v1.31
   - Possibly fixes some env related issues.
 

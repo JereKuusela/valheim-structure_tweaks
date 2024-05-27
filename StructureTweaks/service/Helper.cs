@@ -15,6 +15,8 @@ public struct Discovery
 }
 public class Helper
 {
+  public static bool IsFinite(ZNetView view, float defaultValue) => view.IsValid() && IsFinite(view.GetZDO().GetFloat(ZDOVars.s_health, defaultValue));
+  public static bool IsFinite(float value) => 0f <= value && value < 1E19F;
   public static void AddMessage(Terminal context, string message, bool priority = true)
   {
     context.AddString(message);

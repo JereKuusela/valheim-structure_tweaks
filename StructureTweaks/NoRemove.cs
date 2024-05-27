@@ -1,18 +1,18 @@
 using HarmonyLib;
+using Service;
 
 namespace StructureTweaksPlugin;
 
 [HarmonyPatch(typeof(Player), nameof(Player.CheckCanRemovePiece))]
 public class NoRemove
 {
-  public const float INFITE = 1E19F;
-  private static bool Check(ZNetView view, float defaultValue) => !Configuration.configIgnoreRemove.Value || view.GetZDO().GetFloat(ZDOVars.s_health, defaultValue) < INFITE;
-  static void Postfix(Piece piece, ref bool __result)
+  static bool Postfix(bool result, Piece piece)
   {
-    if (!__result) return;
-    if (!piece || !piece.m_nview.IsValid()) return;
+    if (!Configuration.configIgnoreRemove.Value) return result;
+    if (!result) return result;
+    if (!piece || !piece.m_nview.IsValid()) return true;
     var id = Game.instance.GetPlayerProfile().GetPlayerID();
-    if (id == piece.GetCreator()) return;
-    __result = Check(piece.m_nview, 0f);
+    if (id == piece.GetCreator()) return true;
+    return Helper.IsFinite(piece.m_nview, piece.TryGetComponent<WearNTear>(out var wear) ? wear.m_health : 0f);
   }
 }

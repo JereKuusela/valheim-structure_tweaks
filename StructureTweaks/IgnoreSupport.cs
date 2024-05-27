@@ -1,4 +1,5 @@
 using HarmonyLib;
+using Service;
 
 namespace StructureTweaksPlugin;
 
@@ -16,7 +17,7 @@ public class IgnoreSupport
     if (!Configuration.configIgnoreSupport.Value) return true;
     if (!__instance || !__instance.m_nview.IsValid()) return true;
     var view = __instance.m_nview;
-    if (view.GetZDO().GetFloat(ZDOVars.s_health, __instance.m_health) < INFITE) return true;
+    if (Helper.IsFinite(view, __instance.m_health)) return true;
     if (__instance.m_support == INFITE) return false;
     __instance.m_support = INFITE;
     view.GetZDO().Set(ZDOVars.s_support, INFITE);

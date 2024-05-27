@@ -1,12 +1,12 @@
 using HarmonyLib;
+using Service;
 
 namespace StructureTweaksPlugin;
 
 [HarmonyPatch]
 public class IgnoreDamage
 {
-  public const float INFITE = 1E19F;
-  private static bool Check(ZNetView view, float defaultValue) => !Configuration.configIgnoreDamage.Value || !view.IsValid() || view.GetZDO().GetFloat(ZDOVars.s_health, defaultValue) < INFITE;
+  private static bool Check(ZNetView view, float defaultValue) => !Configuration.configIgnoreDamage.Value || Helper.IsFinite(view, defaultValue);
   [HarmonyPatch(typeof(Character), nameof(Character.IsDodgeInvincible)), HarmonyPostfix]
   static bool Character_IsDodgeInvincible(bool result, Character __instance) => !Check(__instance.m_nview, 0f) || result;
 
