@@ -221,7 +221,7 @@ public class CustomEffectArea : EffectArea
   public float m_duration = 0f;
   public float m_damage = 0f;
   public float m_interval = 0f;
-  public void OnTriggerExit(Collider collider)
+  public new void OnTriggerExit(Collider collider)
   {
     if (ZNet.instance == null) return;
     if (string.IsNullOrEmpty(m_statusEffect)) return;
@@ -233,8 +233,8 @@ public class CustomEffectArea : EffectArea
     var se = seMan.GetStatusEffect(m_statusEffectHash);
     if (se && se.m_ttl == 0f) seMan.RemoveStatusEffect(m_statusEffectHash);
   }
-
-  public new void OnTriggerStay(Collider collider)
+  private static readonly int HashBurning = "Burning".GetStableHashCode();
+  public void OnTriggerStay(Collider collider)
   {
     var target = collider.GetComponent<Character>();
     if (!target || !target.IsOwner()) return;
@@ -255,7 +255,7 @@ public class CustomEffectArea : EffectArea
       {
         if (se is SE_Burning burning)
         {
-          if (burning.m_fireDamageLeft > 0f || se.m_nameHash == Character.s_statusEffectBurning)
+          if (burning.m_fireDamageLeft > 0f || se.m_nameHash == HashBurning)
           {
             var mod = target.GetDamageModifier(HitData.DamageType.Fire);
             var damage = m_damage * ModToMultiplier(mod);

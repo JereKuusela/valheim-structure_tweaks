@@ -1,3 +1,6 @@
+- v1.33
+  - Fixed for the new game version.
+
 - v1.32
   - Fixes infinite health checks not working with -1 health.
 
