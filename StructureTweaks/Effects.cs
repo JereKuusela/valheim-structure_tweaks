@@ -1,11 +1,32 @@
 using System;
 using System.Linq;
 using HarmonyLib;
-using JetBrains.Annotations;
 using Service;
 using UnityEngine;
 
 namespace StructureTweaksPlugin;
+
+public class EffectHelper
+{
+  private static int Layer = 0;
+  public static GameObject CreateEffect(string name, float radius, Transform parent)
+  {
+    if (Layer == 0)
+      Layer = LayerMask.NameToLayer("character_trigger");
+    GameObject obj = new(name)
+    {
+      layer = Layer
+    };
+    var collider = obj.AddComponent<SphereCollider>();
+    collider.isTrigger = true;
+    collider.radius = radius;
+    obj.transform.parent = parent;
+    obj.transform.localPosition = Vector3.zero;
+    obj.transform.localRotation = Quaternion.identity;
+    return obj;
+  }
+}
+
 
 [HarmonyPatch(typeof(ZNetView), nameof(ZNetView.Awake))]
 public class ZNetViewAwake
@@ -26,16 +47,10 @@ public class ZNetViewAwake
       return;
     }
     if (size == 0f) return;
-    GameObject obj = new();
-    var collider = obj.AddComponent<SphereCollider>();
-    collider.isTrigger = true;
-    collider.radius = size;
+    var obj = EffectHelper.CreateEffect("EnvArea", size, view.transform);
     zone = obj.AddComponent<EnvZone>();
     zone.m_force = force;
     zone.m_environment = values[1];
-    obj.transform.parent = view.transform;
-    obj.transform.localPosition = Vector3.zero;
-    obj.transform.localRotation = Quaternion.identity;
   }
   static void HandleEvent(ZNetView view)
   {
@@ -51,14 +66,8 @@ public class ZNetViewAwake
       return;
     }
     if (size == 0f) return;
-    GameObject obj = new();
-    var collider = obj.AddComponent<SphereCollider>();
-    collider.isTrigger = true;
-    collider.radius = size;
+    var obj = EffectHelper.CreateEffect("EventArea", size, view.transform);
     obj.AddComponent<EventZone>().m_event = values[1];
-    obj.transform.parent = view.transform;
-    obj.transform.localPosition = Vector3.zero;
-    obj.transform.localRotation = Quaternion.identity;
   }
   private static EffectArea.Type ParseType(string[] values)
   {
@@ -89,14 +98,9 @@ public class ZNetViewAwake
 
   private static void AddEffect(Transform parent, string statusStr, string effectStr)
   {
-    GameObject obj = new();
-    var collider = obj.AddComponent<SphereCollider>();
-    collider.isTrigger = true;
+    var obj = EffectHelper.CreateEffect("EffectArea", 0f, parent);
+    var collider = obj.GetComponent<SphereCollider>();
     var effect = obj.AddComponent<CustomEffectArea>();
-    effect.m_collider = collider;
-    obj.transform.parent = parent;
-    obj.transform.localPosition = Vector3.zero;
-    obj.transform.localRotation = Quaternion.identity;
 
     if (statusStr != "")
     {
@@ -123,7 +127,7 @@ public class ZNetViewAwake
       if (values.Length > 1)
       {
         collider.radius = Math.Max(collider.radius, Helper.Float(values[0]));
-        effect.m_type = ParseType(values.Skip(1).ToArray());
+        effect.m_type = ParseType([.. values.Skip(1)]);
         effect.m_playerOnly = effect.m_playerOnly || values.Length > 2 && Helper.IsTruthy(values[values.Length - 1]);
       }
     }
@@ -223,6 +227,7 @@ public class CustomEffectArea : EffectArea
   public float m_interval = 0f;
   public new void OnTriggerExit(Collider collider)
   {
+    base.OnTriggerExit(collider);
     if (ZNet.instance == null) return;
     if (string.IsNullOrEmpty(m_statusEffect)) return;
     var component = collider.GetComponent<Character>();

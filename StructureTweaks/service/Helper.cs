@@ -44,7 +44,7 @@ public class Helper
     if (!piece) throw new InvalidOperationException("Not hovering anything.");
     var view = piece.m_nview;
     if (!view) throw new InvalidOperationException("Not hovering anything.");
-    var canEdit = Helper.CanEdit(view, mode);
+    var canEdit = CanEdit(view, mode);
     if (!canEdit)
       throw new InvalidOperationException("Not allowed to edit.");
     return view;
