@@ -1,3 +1,6 @@
+- v1.35
+  - Fixes issue with AzuAreaRepair mod.
+
 - v1.34
   - Fixes weather areas blocking some projectiles.
 

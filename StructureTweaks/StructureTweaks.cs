@@ -3,13 +3,14 @@ using HarmonyLib;
 using Service;
 
 namespace StructureTweaksPlugin;
+
 [HarmonyPatch]
 [BepInPlugin(GUID, NAME, VERSION)]
 public class Plugin : BaseUnityPlugin
 {
   const string GUID = "structure_tweaks";
   const string NAME = "Structure Tweaks";
-  const string VERSION = "1.34";
+  const string VERSION = "1.35";
   public static ServerSync.ConfigSync ConfigSync = new(GUID)
   {
     DisplayName = NAME,
