@@ -18,8 +18,10 @@ public class Wear
   public static void SetWear(ZNetView view, string value)
   {
     if (!view.IsOwner()) return;
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return;
     var number = Number(value);
-    view.GetZDO().Set(Hash.Wear, number);
+    zdo.Set(Hash.Wear, number);
   }
   static void Register(ZNetView view)
   {
@@ -44,8 +46,9 @@ public class Wear
   static void OverrideWear(WearNTear __instance, ref float health)
   {
     if (!Configuration.configWear.Value) return;
-    if (!__instance.m_nview) return;
-    var value = __instance.m_nview.GetZDO().GetInt(Hash.Wear);
+    var zdo = Helper.GetZDO(__instance.m_nview);
+    if (zdo == null) return;
+    var value = zdo.GetInt(Hash.Wear);
     health = Convert(value, health);
   }
 }

@@ -19,8 +19,10 @@ public class IgnoreSupport
     var view = __instance.m_nview;
     if (Helper.IsFinite(view, __instance.m_health)) return true;
     if (__instance.m_support == INFITE) return false;
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return true;
     __instance.m_support = INFITE;
-    view.GetZDO().Set(ZDOVars.s_support, INFITE);
+    zdo.Set(ZDOVars.s_support, INFITE);
     return false;
   }
 }

@@ -50,10 +50,12 @@ public class Growth
   public static void SetGrowth(ZNetView view, string value)
   {
     if (!view.IsOwner()) return;
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return;
     var number = Number(value);
-    view.GetZDO().Set(Hash.Growth, number);
+    zdo.Set(Hash.Growth, number);
     var date = number < 0 ? ZNet.instance.GetTime().Ticks : DateTime.MaxValue.Ticks / 2L;
-    view.GetZDO().Set(ZDOVars.s_plantTime, date);
+    zdo.Set(ZDOVars.s_plantTime, date);
   }
   static void Register(ZNetView view)
   {

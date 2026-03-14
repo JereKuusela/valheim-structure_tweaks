@@ -33,7 +33,9 @@ public class ZNetViewAwake
 {
   static void HandleWeather(ZNetView view)
   {
-    var str = view.GetZDO().GetString(Hash.Weather);
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return;
+    var str = zdo.GetString(Hash.Weather);
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
@@ -54,7 +56,9 @@ public class ZNetViewAwake
   }
   static void HandleEvent(ZNetView view)
   {
-    var str = view.GetZDO().GetString(Hash.Event);
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return;
+    var str = zdo.GetString(Hash.Event);
     if (str == "") return;
     var values = str.Split(',');
     if (values.Length < 2) return;
@@ -81,8 +85,10 @@ public class ZNetViewAwake
   }
   static void HandleEffect(ZNetView view)
   {
-    var statusStr = view.GetZDO().GetString(Hash.Status);
-    var effectStr = view.GetZDO().GetString(Hash.Effect);
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return;
+    var statusStr = zdo.GetString(Hash.Status);
+    var effectStr = zdo.GetString(Hash.Effect);
     if (statusStr == "" && effectStr == "") return;
     var components = view.GetComponentsInChildren<EffectArea>(true);
     foreach (var component in components)
@@ -137,7 +143,9 @@ public class ZNetViewAwake
   {
     // Adding components to dungeons wouldn't really work.
     if (view.gameObject.GetComponent<DungeonGenerator>()) return;
-    var str = view.GetZDO().GetString(Hash.Component).ToLower();
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return;
+    var str = zdo.GetString(Hash.Component).ToLower();
     if (str == "") return;
     var values = str.Split(',');
     foreach (var value in values)

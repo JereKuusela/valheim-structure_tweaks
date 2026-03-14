@@ -40,7 +40,9 @@ public class ZdoTextReceiver : MonoBehaviour, TextReceiver
 
   public void SetText(string text)
   {
-    m_nview?.GetZDO().Set(Hashes[Index], text);
+    var zdo = Helper.GetZDO(m_nview);
+    if (zdo == null) return;
+    zdo.Set(Hashes[Index], text);
     Index += 1;
     if (Index == Hashes.Length)
     {

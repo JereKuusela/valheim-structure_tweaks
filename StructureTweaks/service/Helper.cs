@@ -15,7 +15,16 @@ public struct Discovery
 }
 public class Helper
 {
-  public static bool IsFinite(ZNetView view, float defaultValue) => view.IsValid() && IsFinite(view.GetZDO().GetFloat(ZDOVars.s_health, defaultValue));
+  public static ZDO? GetZDO(ZNetView? view)
+  {
+    if (!view || !view.IsValid()) return null;
+    return view.GetZDO();
+  }
+  public static bool IsFinite(ZNetView view, float defaultValue)
+  {
+    var zdo = GetZDO(view);
+    return zdo != null && IsFinite(zdo.GetFloat(ZDOVars.s_health, defaultValue));
+  }
   public static bool IsFinite(float value) => 0f <= value && value < 1E19F;
   public static void AddMessage(Terminal context, string message, bool priority = true)
   {
@@ -116,48 +125,55 @@ public class Helper
 
   public static void Float(ZNetView? view, int hash, Action<float> action)
   {
-    if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetFloat(hash);
+    var zdo = GetZDO(view);
+    if (zdo == null) return;
+    var value = zdo.GetFloat(hash);
     if (value == 0f) return;
     action(value);
   }
   public static void Int(ZNetView? view, int hash, Action<int> action)
   {
-    if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetInt(hash);
+    var zdo = GetZDO(view);
+    if (zdo == null) return;
+    var value = zdo.GetInt(hash);
     if (value == 0) return;
     action(value);
   }
   public static void Bool(ZNetView? view, int hash, Action action)
   {
-    if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetBool(hash);
+    var zdo = GetZDO(view);
+    if (zdo == null) return;
+    var value = zdo.GetBool(hash);
     if (!value) return;
     action();
   }
   public static bool Bool(ZNetView? view, int hash)
   {
-    if (view == null || !view.IsValid()) return false;
-    return view.GetZDO().GetBool(hash);
+    var zdo = GetZDO(view);
+    if (zdo == null) return false;
+    return zdo.GetBool(hash);
   }
   public static int Int(ZNetView? view, int hash)
   {
-    if (view == null || !view.IsValid()) return 0;
-    return view.GetZDO().GetInt(hash);
+    var zdo = GetZDO(view);
+    if (zdo == null) return 0;
+    return zdo.GetInt(hash);
   }
   public static void String(ZNetView? view, int hash, Action<string> action)
   {
-    if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetString(hash);
+    var zdo = GetZDO(view);
+    if (zdo == null) return;
+    var value = zdo.GetString(hash);
     if (value == "") return;
     action(value);
   }
   public static bool Prefab(ZNetView? view, int hash, Action<GameObject> action)
   {
-    if (view == null || !view.IsValid()) return false;
-    var value = view.GetZDO().GetInt(hash);
+    var zdo = GetZDO(view);
+    if (zdo == null) return false;
+    var value = zdo.GetInt(hash);
     if (value == 0)
-      value = view.GetZDO().GetString(hash).GetStableHashCode();
+      value = zdo.GetString(hash).GetStableHashCode();
     var prefab = GetPrefab(value);
     if (prefab == null) return false;
     action(prefab);
@@ -169,10 +185,11 @@ public class Helper
   }
   public static void Item(ZNetView view, int hash, Action<ItemDrop> action)
   {
-    if (view == null || !view.IsValid()) return;
-    var value = view.GetZDO().GetInt(hash);
+    var zdo = GetZDO(view);
+    if (zdo == null) return;
+    var value = zdo.GetInt(hash);
     if (value == 0)
-      value = view.GetZDO().GetString(hash).GetStableHashCode();
+      value = zdo.GetString(hash).GetStableHashCode();
     var item = GetItem(value);
     if (item == null) return;
     action(item);
@@ -180,10 +197,11 @@ public class Helper
 
   public static bool CanEdit(ZNetView? view, string mode)
   {
-    if (view == null || !view.IsValid()) return false;
+    var zdo = GetZDO(view);
+    if (zdo == null) return false;
     if (ZNet.instance.IsServer() || StructureTweaksPlugin.Plugin.ConfigSync.IsAdmin || mode == "All") return true;
     var id = Game.instance.GetPlayerProfile().GetPlayerID();
-    return view.GetZDO().GetLong(ZDOVars.s_creator) == id;
+    return zdo.GetLong(ZDOVars.s_creator) == id;
   }
 
   public static float TryFloat(string[] args, int index, float defaultValue = 1f)

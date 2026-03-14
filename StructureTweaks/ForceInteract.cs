@@ -53,7 +53,8 @@ public class Unlock
     var canEdit = PrivateArea.CheckAccess(point, 0f, false, false);
     if (!canEdit) return result;
 
-    var zdo = view.GetZDO();
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return result;
     var value = zdo.GetBool(Hash.Unlock);
     if (value)
       return result + Localization.instance.Localize("\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] Remove unlock");
@@ -81,8 +82,10 @@ public class Unlock
     if (hold) return false;
     var canEdit = PrivateArea.CheckAccess(point, 0f, false, false);
     if (!canEdit) return true;
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return true;
     if (!view.HasOwner()) view.ClaimOwnership();
-    view.InvokeRPC("ST_ForceUnlock", !view.GetZDO().GetBool(Hash.Unlock));
+    view.InvokeRPC("ST_ForceUnlock", !zdo.GetBool(Hash.Unlock));
     __result = true;
     return false;
   }
@@ -100,7 +103,9 @@ public class Unlock
   }
   static void ForceUnlock(ZNetView view, bool value)
   {
-    view.GetZDO().Set(Hash.Unlock, value);
+    var zdo = Helper.GetZDO(view);
+    if (zdo == null) return;
+    zdo.Set(Hash.Unlock, value);
   }
   static void Register(ZNetView view)
   {
