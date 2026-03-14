@@ -50,7 +50,7 @@ public class ConfigWrapper
     context.AddString(message);
     Player.m_localPlayer?.Message(MessageHud.MessageType.TopLeft, message);
   }
-  private readonly Dictionary<string, Action<Terminal, string>> SettingHandlers = new();
+  private readonly Dictionary<string, Action<Terminal, string>> SettingHandlers = [];
   private void Register(ConfigEntry<bool> setting)
   {
     var name = setting.Definition.Key;
@@ -64,19 +64,19 @@ public class ConfigWrapper
     SettingHandlers.Add(key, (Terminal terminal, string value) => SetValue(terminal, setting, name, value));
   }
   private static string State(bool value) => value ? "enabled" : "disabled";
-  private static readonly HashSet<string> Truthies = new() {
+  private static readonly HashSet<string> Truthies = [
     "1",
     "true",
     "yes",
     "on"
-  };
+  ];
   private static bool IsTruthy(string value) => Truthies.Contains(value);
-  private static readonly HashSet<string> Falsies = new() {
+  private static readonly HashSet<string> Falsies = [
     "0",
     "false",
     "no",
     "off"
-  };
+  ];
   private static bool IsFalsy(string value) => Falsies.Contains(value);
 
   private static void Toggle(Terminal context, ConfigEntry<bool> setting, string name, string value)

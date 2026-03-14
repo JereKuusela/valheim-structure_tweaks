@@ -8,8 +8,8 @@ namespace StructureTweaksPlugin;
 public class ZdoTextReceiver : MonoBehaviour, TextReceiver
 {
   private int Index = 0;
-  private readonly int[] Hashes = new int[] { Hash.Name, Hash.Text, Hash.Topic, Hash.Compendium };
-  private readonly string[] Topics = new string[] { "Enter name", "$piece_sign_input", "Enter topic", "Enter compendium topic" };
+  private readonly int[] Hashes = [Hash.Name, Hash.Text, Hash.Topic, Hash.Compendium];
+  private readonly string[] Topics = ["Enter name", "$piece_sign_input", "Enter topic", "Enter compendium topic"];
 
   private ZNetView? m_nview;
   private bool Queued = false;
@@ -101,20 +101,20 @@ public class RuneStoneText
       receiver.Show();
       return false;
     }
-    __instance.m_randomTexts ??= new();
+    __instance.m_randomTexts ??= [];
     Helper.String(view, Text, value =>
     {
-      __instance.m_randomTexts = new();
+      __instance.m_randomTexts = [];
       __instance.m_text = value;
     });
     Helper.String(view, Topic, value =>
     {
-      __instance.m_randomTexts = new();
+      __instance.m_randomTexts = [];
       __instance.m_topic = value;
     });
     Helper.String(view, Compendium, value =>
     {
-      __instance.m_randomTexts = new();
+      __instance.m_randomTexts = [];
       __instance.m_label = value;
     });
     Helper.String(view, Discover, value =>

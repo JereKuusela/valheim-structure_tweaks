@@ -227,20 +227,20 @@ public class Helper
     return scale;
   }
 
-  private static readonly HashSet<string> Truthies = new() {
+  private static readonly HashSet<string> Truthies = [
     "1",
     "true",
     "yes",
     "on"
-  };
+  ];
   public static bool IsTruthy(string value) => Truthies.Contains(value);
-  private static readonly HashSet<string> Falsies = new() {
+  private static readonly HashSet<string> Falsies = [
     "0",
     "false",
     "no",
     "off",
     ""
-  };
+  ];
   public static bool IsFalsy(string value) => Falsies.Contains(value);
 
   public static T Get<T>(ZNetView view) where T : Component

@@ -5,7 +5,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.Awake))]
 public class NoTargeting
 {
-  static readonly Dictionary<int, bool> Originals = new();
+  static readonly Dictionary<int, bool> Originals = [];
   public static void Update() => Update(ZNetScene.instance);
   public static void Update(int prefab, Piece obj)
   {
@@ -16,7 +16,7 @@ public class NoTargeting
   }
   public static void Update(ZNetScene scene)
   {
-    Dictionary<int, bool> Values = new();
+    Dictionary<int, bool> Values = [];
     foreach (var kvp in scene.m_namedPrefabs)
     {
       if (kvp.Value.GetComponent<Piece>() is { } piece)

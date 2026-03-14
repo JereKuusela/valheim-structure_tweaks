@@ -9,7 +9,7 @@ namespace StructureTweaksPlugin;
 [HarmonyPatch(typeof(MusicLocation), nameof(MusicLocation.Awake))]
 public class MusicLocationAwake
 {
-  private static Dictionary<string, AudioClip> Clips = new();
+  private static Dictionary<string, AudioClip> Clips = [];
 
 
   static void Postfix(MusicLocation __instance)

@@ -71,11 +71,11 @@ public class WearCommand
   }
   public WearCommand()
   {
-    List<string> values = new() {
+    List<string> values = [
       "broken",
       "damaged",
       "healthy"
-    };
+    ];
 
     Helper.Command("wear", "[broken/damaged/healthy] - Overrides the wear health.", (args) =>
     {

@@ -88,12 +88,12 @@ public class GrowthCommand
 
   public GrowthCommand()
   {
-    List<string> values = new() {
+    List<string> values = [
       "big",
       "big_bad",
       "small",
       "small_bad"
-    };
+    ];
 
     Helper.Command("growth", "[big/big_bad/small/small_bad] - Overrides the plant growth.", (args) =>
     {
