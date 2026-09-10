@@ -60,7 +60,7 @@ public class Helper
   }
   public static void Command(string name, string description, Terminal.ConsoleEvent action, Terminal.ConsoleOptionsFetcher? fetcher = null)
   {
-    new Terminal.ConsoleCommand(name, description, Helper.Catch(action), optionsFetcher: fetcher);
+    new Terminal.ConsoleCommand(name, description, Catch(action), optionsFetcher: fetcher);
   }
   public static void AddError(Terminal context, string message, bool priority = true)
   {
